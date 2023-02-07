@@ -24,6 +24,10 @@ export const routes = [
         index: true,
         element: <LandingPage />,
       },
+      {
+        path: "register",
+        element: <Register />,
+      },
         ],
       },
     ],
