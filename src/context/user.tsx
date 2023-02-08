@@ -18,8 +18,19 @@ const UserContext = createContext<{
 
 function UserContextProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserSchema | undefined>(undefined);
+  const userQuery = useUserQuery();
+
+  useEffect(() => {
+    if (userQuery.data) {
+      setUser(userQuery.data);
+    }
+  }, [userQuery.data]);
 
   function login() {
+    if (userQuery.data) {
+      setUser(() => userQuery.data);
+      return userQuery.data;
+    }
   }
 
   function logout() {
