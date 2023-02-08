@@ -13,8 +13,11 @@ import Login from "./routes/auth/login";
 import Register from "./routes/auth/register";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import LandingPage from "./routes/landingPage";
+import RequireAuth from "./routes/requireAuth";
+import Layout from "./components/layout";
 import { ModalsProvider } from "@mantine/modals";
 import { useState } from "react";
+import Profile from "./routes/profile";
 
 export const routes = [
   {
@@ -33,6 +36,22 @@ export const routes = [
       {
         path: "register",
         element: <Register />,
+      },
+      {
+        path: "/profile",
+        element: (
+          <RequireAuth>
+            <SpotlightWrapper>
+              <Layout />
+            </SpotlightWrapper>
+          </RequireAuth>
+        ),
+        children: [
+          {
+            index: true,
+            element: <Profile />,
+          },
+        ],
       },
         ],
       },
