@@ -9,6 +9,8 @@ import {
 import { NotificationsProvider } from "@mantine/notifications";
 import { UserContextProvider } from "./context/user";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Login from "./routes/auth/login";
+import Register from "./routes/auth/register";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import LandingPage from "./routes/landingPage";
 import { ModalsProvider } from "@mantine/modals";
@@ -23,6 +25,10 @@ export const routes = [
       {
         index: true,
         element: <LandingPage />,
+      },
+      {
+        path: "login",
+        element: <Login />,
       },
       {
         path: "register",

@@ -15,3 +15,11 @@ export async function registerUser(payload: {
 }) {
   return axios.post(userBase, payload).then((res) => res.data);
 }
+
+export async function login(payload: { email: string; password: string }) {
+  return axios.post(sessionBase, payload, {}).then((res) => {
+    localStorage.setItem("access_token", res.data.accessToken);
+    localStorage.setItem("refresh_token", res.data.refreshToken);
+    return res.data;
+  });
+}
