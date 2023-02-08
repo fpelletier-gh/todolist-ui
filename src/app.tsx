@@ -12,6 +12,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./routes/auth/login";
 import Register from "./routes/auth/register";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Todolists from "./routes/todolists";
 import LandingPage from "./routes/landingPage";
 import RequireAuth from "./routes/requireAuth";
 import Layout from "./components/layout";
@@ -53,6 +54,20 @@ export const routes = [
           },
         ],
       },
+      {
+        path: "/todolist",
+        element: (
+          <RequireAuth>
+            <SpotlightWrapper>
+              <Layout />
+            </SpotlightWrapper>
+          </RequireAuth>
+        ),
+        children: [
+          {
+            index: true,
+            element: <Todolists />,
+          },
         ],
       },
     ],
