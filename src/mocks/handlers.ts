@@ -19,6 +19,18 @@ export const unauthorizedSessionHandler = rest.all(
 );
 
 export const handlers = [
+  rest.get(todolistBase, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(todolists));
+  }),
+
+  rest.get(userBase, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(user));
+  }),
+
+  rest.post(userBase, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(user));
+  }),
+
   rest.post(sessionBase, async (req, res, ctx) => {
     const { email } = await req.json();
     if (email === "validUser@test.com") {

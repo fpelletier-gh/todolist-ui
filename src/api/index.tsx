@@ -44,3 +44,8 @@ export async function getUser(): Promise<UserSchema> {
       return null;
     });
 }
+export async function getTodolists(): Promise<TodolistSchema[]> {
+  return axios.get(todolistBase).then((res) => {
+    return res.data;
+  });
+}
