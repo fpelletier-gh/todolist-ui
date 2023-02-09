@@ -12,6 +12,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./routes/auth/login";
 import Register from "./routes/auth/register";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Todolist from "./routes/todolist";
 import Todolists from "./routes/todolists";
 import LandingPage from "./routes/landingPage";
 import RequireAuth from "./routes/requireAuth";
@@ -67,6 +68,10 @@ export const routes = [
           {
             index: true,
             element: <Todolists />,
+          },
+          {
+            path: "/todolist/:todolistId",
+            element: <Todolist />,
           },
         ],
       },

@@ -45,12 +45,40 @@ export async function getUser(): Promise<UserSchema> {
     });
 }
 
+export async function createTodo({
+  todolistId,
+  payload,
+}: {
+  todolistId: string;
+  payload: { title: string };
+}): Promise<TodoSchema> {
+  return axios
+    .post(`${todolistBase}/${todolistId}`, payload)
+    .then((res) => res.data);
+}
+
 export async function createTodolist(payload: {
   title: string;
   description: string;
 }): Promise<TodolistSchema> {
   return axios.post(todolistBase, payload).then((res) => res.data);
 }
+
+export function updateTodo({
+  todolistId,
+  todoId,
+  payload,
+}: {
+  todolistId: string;
+  todoId: string;
+  payload: Partial<TodoPayload>;
+}) {
+  return axios.put<TodolistSchema>(
+    `${todolistBase}/${todolistId}/${todoId}`,
+    payload
+  );
+}
+
 export async function getTodolists(): Promise<TodolistSchema[]> {
   return axios.get(todolistBase).then((res) => {
     return res.data;
