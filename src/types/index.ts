@@ -41,3 +41,8 @@ export interface User {
   email: string;
   username: string;
 }
+
+export interface TodoPayload {
+  title: string;
+  complete: boolean;
+}
