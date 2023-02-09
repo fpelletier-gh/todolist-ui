@@ -18,6 +18,11 @@ export interface TodoSchema {
   complete: boolean;
 }
 
+export interface TodolistPayloadSchema {
+  description: string;
+  title: string;
+}
+
 export interface TodolistSchema {
   _id: string;
   user: string;

@@ -14,6 +14,7 @@ import {
 } from "@mantine/core";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import Sidebar from "./sidebar";
 import HeaderComponent from "./header";
 import { Link } from "react-router-dom";
 
@@ -58,6 +59,7 @@ export default function Layout() {
             </Group>
           </Navbar.Section>
           <Navbar.Section grow mt="md">
+            <Sidebar closeNavbar={closeNavbar} />
           </Navbar.Section>
         </Navbar>
       }
