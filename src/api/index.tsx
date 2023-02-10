@@ -31,6 +31,12 @@ export async function login(payload: { email: string; password: string }) {
   });
 }
 
+export async function logout() {
+  return axios.delete(sessionBase).then((res) => {
+    return res.data;
+  });
+}
+
 export async function getUser(): Promise<UserSchema> {
   return axios
     .get(userBase)
