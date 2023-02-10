@@ -15,7 +15,7 @@ import { useForm } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { createTodo } from "../api";
 import Todo from "../components/todo";
 import { TodoSchema } from "../types";
@@ -27,7 +27,6 @@ export default function Todolist() {
   const params = useParams();
   const queryClient = useQueryClient();
   const [newTodo, setNewTodo] = useState<boolean>(false);
-  const navigate = useNavigate();
 
   const form = useForm({
     initialValues: { title: "" },
