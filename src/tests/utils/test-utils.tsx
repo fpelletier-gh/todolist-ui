@@ -94,6 +94,44 @@ export function renderWithClient(ui: React.ReactElement) {
   };
 }
 
+export const renderWithRouter = (route = "/") => {
+  const testQueryClient = createTestQueryClient();
+  const router = createMemoryRouter(routes, { initialEntries: [route] });
+
+  let colorScheme: ColorScheme = "dark";
+
+  const toggleColorScheme = () =>
+    (colorScheme = colorScheme === "dark" ? "light" : "dark");
+
+  return {
+    user: userEvent.setup(),
+    ...render(
+      <ColorSchemeProvider
+        colorScheme={"dark"}
+        toggleColorScheme={toggleColorScheme}
+      >
+        <MantineProvider
+          withGlobalStyles
+          withNormalizeCSS
+          theme={{
+            colorScheme: colorScheme,
+          }}
+        >
+          <NotificationsProvider position="top-center">
+            <ModalsProvider>
+              <QueryClientProvider client={testQueryClient}>
+                <UserContextProvider>
+                  <RouterProvider router={router} />
+                </UserContextProvider>
+              </QueryClientProvider>
+            </ModalsProvider>
+          </NotificationsProvider>
+        </MantineProvider>
+      </ColorSchemeProvider>
+    ),
+  };
+};
+
 export function createWrapper() {
   const testQueryClient = createTestQueryClient();
   return ({ children }: { children: React.ReactNode }) => (
