@@ -70,6 +70,23 @@ export async function createTodolist(payload: {
   return axios.post(todolistBase, payload).then((res) => res.data);
 }
 
+export function updateTodolist({
+  todolistId,
+  payload,
+}: {
+  todolistId: string;
+  payload: {
+    title: string;
+    description: string;
+  };
+}) {
+  return axios.put<TodolistSchema>(`${todolistBase}/${todolistId}`, payload);
+}
+
+export async function deleteTodolist(todolistId: string) {
+  return axios.delete(`${todolistBase}/${todolistId}`).then((res) => res.data);
+}
+
 export function updateTodo({
   todolistId,
   todoId,
@@ -83,6 +100,13 @@ export function updateTodo({
     `${todolistBase}/${todolistId}/${todoId}`,
     payload
   );
+}
+
+
+export async function getTodolist(todolistId: string): Promise<TodolistSchema> {
+  return axios.get(`${todolistBase}/${todolistId}`).then((res) => {
+    return res.data;
+  });
 }
 
 export async function getTodolists(): Promise<TodolistSchema[]> {
