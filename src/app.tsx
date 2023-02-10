@@ -21,6 +21,7 @@ import { ModalsProvider } from "@mantine/modals";
 import { useState } from "react";
 import SpotlightWrapper from "./routes/spotlightWrapper";
 import Profile from "./routes/profile";
+import Contact from "./routes/contact";
 
 export const routes = [
   {
@@ -39,6 +40,10 @@ export const routes = [
       {
         path: "register",
         element: <Register />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
       },
       {
         path: "/profile",
@@ -73,6 +78,10 @@ export const routes = [
           {
             path: "/todolist/:todolistId",
             element: <Todolist />,
+          },
+          {
+            path: "contact",
+            element: <Contact />,
           },
         ],
       },
