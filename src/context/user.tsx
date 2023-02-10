@@ -34,6 +34,9 @@ function UserContextProvider({ children }: { children: ReactNode }) {
   }
 
   function logout() {
+    setUser(undefined);
+    localStorage.setItem("access_token", "");
+    localStorage.setItem("refresh_token", "");
   }
 
   return (
