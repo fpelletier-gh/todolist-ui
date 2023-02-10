@@ -102,6 +102,17 @@ export function updateTodo({
   );
 }
 
+export async function deleteTodo({
+  todolistId,
+  todoId,
+}: {
+  todolistId: string;
+  todoId: string;
+}) {
+  return axios
+    .delete(`${todolistBase}/${todolistId}/${todoId}`)
+    .then((res) => res.data);
+}
 
 export async function getTodolist(todolistId: string): Promise<TodolistSchema> {
   return axios.get(`${todolistBase}/${todolistId}`).then((res) => {

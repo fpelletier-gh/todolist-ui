@@ -1,6 +1,8 @@
 import { Checkbox, Flex } from "@mantine/core";
+import { useState } from "react";
 import { useUpdateTodo } from "../hooks";
 import { TodoSchema } from "../types";
+import TodoMenu from "./todoMenu";
 
 export default function Todo({
   todolistId,
@@ -10,6 +12,7 @@ export default function Todo({
   todo: TodoSchema;
 }) {
   const { updateTodo } = useUpdateTodo();
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   // TODO: add optimistic update for checkbox
   function handleCheckboxChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -22,6 +25,8 @@ export default function Todo({
 
   return (
     <Flex
+      onMouseEnter={() => setIsVisible(true)}
+      onMouseLeave={() => setIsVisible(false)}
       className="todo"
       mt="xs"
       justify="space-between"
@@ -34,6 +39,11 @@ export default function Todo({
         sx={{ lineHeight: 1 }}
         radius="sm"
         onChange={handleCheckboxChange}
+      />
+      <TodoMenu
+        isVisible={isVisible}
+        todolistId={todolistId}
+        todoId={todo.todoId}
       />
     </Flex>
   );
