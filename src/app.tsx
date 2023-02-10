@@ -19,6 +19,7 @@ import RequireAuth from "./routes/requireAuth";
 import Layout from "./components/layout";
 import { ModalsProvider } from "@mantine/modals";
 import { useState } from "react";
+import SpotlightWrapper from "./routes/spotlightWrapper";
 import Profile from "./routes/profile";
 
 export const routes = [

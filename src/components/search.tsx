@@ -1,7 +1,10 @@
 import { Button, Text } from "@mantine/core";
+import { useSpotlight } from "@mantine/spotlight";
 import { IconSearch } from "@tabler/icons";
 
 export default function Search() {
+  const spotlight = useSpotlight();
+
   return (
     <Button
       variant="outline"
@@ -9,6 +12,9 @@ export default function Search() {
       color="gray.7"
       radius="md"
       leftIcon={<IconSearch size={14} />}
+      onClick={() => {
+        spotlight.openSpotlight();
+      }}
       sx={(theme) => ({
         borderColor:
           theme.colorScheme === "dark"
