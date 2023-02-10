@@ -1,9 +1,14 @@
+import { showNotification } from "@mantine/notifications";
+import { IconX } from "@tabler/icons";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   createTodolist,
+  deleteTodolist,
+  getTodolist,
   getTodolists,
   getUser,
   updateTodo,
+  updateTodolist,
 } from "../api";
 import { TodolistPayloadSchema, TodolistSchema, TodoPayload } from "../types";
 
@@ -29,6 +34,28 @@ export function useUserQuery() {
     queryKey: ["user"],
     queryFn: getUser,
     staleTime: Infinity,
+  });
+}
+
+export function useEditTodolist() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      todolistId,
+      payload,
+    }: {
+      todolistId: string;
+      payload: TodolistPayloadSchema;
+    }) => updateTodolist({ todolistId, payload }),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["todolist"]);
+    },
+  });
+}
+
+export function useDeleteTodolist() {
+  return useMutation({
+    mutationFn: (todolistId: string) => deleteTodolist(todolistId),
   });
 }
 

@@ -1,5 +1,7 @@
 import { Anchor, Box, Text, Group } from "@mantine/core";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import TodolistMenu from "./todolistMenu";
 
 export default function NavLink({
   to,
@@ -12,6 +14,7 @@ export default function NavLink({
   todolistId: string;
   closeNavbar: () => void;
 }) {
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   return (
     <Anchor
@@ -23,6 +26,12 @@ export default function NavLink({
       sx={(theme) => ({
         borderRadius: "5px",
         overflowX: "hidden",
+        "&:hover": {
+          backgroundColor:
+            theme.colorScheme === "dark"
+              ? theme.colors.dark[5]
+              : theme.colors.gray[3],
+        },
       })}
       component={Link}
       to={to}
@@ -36,6 +45,13 @@ export default function NavLink({
         onClick={closeNavbar}
       >
         <Text truncate={true}>{title}</Text>
+        <Box mr="md" w="10px">
+          <TodolistMenu
+            key={todolistId}
+            isVisible={isVisible}
+            todolistId={todolistId}
+          />
+        </Box>
       </Group>
     </Anchor>
   );

@@ -20,6 +20,7 @@ import Todo from "../components/todo";
 import { TodoSchema } from "../types";
 import { useTodolist } from "../hooks";
 import { IconX } from "@tabler/icons";
+import TodolistMenu from "../components/todolistMenu";
 
 export default function Todolist() {
   const params = useParams();
@@ -85,6 +86,10 @@ export default function Todolist() {
           <Card.Section withBorder inheritPadding py="xs">
             <Group position="apart" noWrap>
               <Title order={2}>{todolist.data?.title}</Title>
+              <TodolistMenu
+                todolistId={params.todolistId}
+                navigatePath="/todolist"
+              />
             </Group>
             <Text size="sm" color="dimmed">
               {todolist.data?.description}

@@ -10,12 +10,27 @@ import {
 import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { TodolistSchema, TodoSchema } from "../types";
+import TodolistMenu from "./todolistMenu";
 
 export default function TodolistCard({
   todolist,
 }: {
   todolist: TodolistSchema;
 }) {
+  const ref = useRef(null);
+  const navigate = useNavigate();
+  const styles = {
+    checkbox: { input: { cursor: "pointer" }, label: { cursor: "pointer" } },
+  };
+
+  function handleCheckboxClick(e: React.MouseEvent<HTMLInputElement>) {
+    e.preventDefault();
+    if (ref.current) {
+      const current = ref.current as HTMLDivElement;
+      navigate(`/todolist/${current.id}`);
+    }
+  }
+
   return (
     <Anchor
       component={Link}
@@ -38,6 +53,10 @@ export default function TodolistCard({
             <Title truncate={true} order={3} size="lg">
               {todolist.title}
             </Title>
+            <TodolistMenu
+              todolistId={todolist.todolistId}
+              navigatePath="/todolist"
+            />
           </Group>
           <Text truncate={true} size="sm" color="dimmed">
             {todolist.description}
