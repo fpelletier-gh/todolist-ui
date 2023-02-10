@@ -3,6 +3,7 @@ import { IconX } from "@tabler/icons";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   createTodolist,
+  deleteTodo,
   deleteTodolist,
   getTodolist,
   getTodolists,
@@ -28,6 +29,14 @@ export function useTodolist(todolistId: string) {
   });
 }
 
+export function useTodo(todolistId: string, todoId: string) {
+  return useQuery({
+    queryKey: ["todolist", todolistId],
+    queryFn: () => getTodolist(todolistId),
+    select: (data) => data.todos.find((todo) => todo.todoId === todoId),
+    keepPreviousData: true,
+  });
+}
 
 export function useUserQuery() {
   return useQuery({
@@ -87,6 +96,23 @@ export function useUpdateTodo() {
     },
   });
   return { updateTodo: mutate };
+}
+
+export function useDeleteTodo() {
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: ({
+      todolistId,
+      todoId,
+    }: {
+      todolistId: string;
+      todoId: string;
+    }) => deleteTodo({ todolistId, todoId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["todolist"]);
+    },
+  });
+  return { deleteTodo: mutate };
 }
 
 export function useNewTodolist() {
