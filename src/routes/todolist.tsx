@@ -9,6 +9,7 @@ import {
   Group,
   Box,
   Container,
+  Anchor,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
@@ -161,6 +162,11 @@ export default function Todolist() {
             )}
           </Flex>
         </Card>
+        <Box mt="lg">
+          <Anchor component={Link} underline={false} to="/todolist">
+            Back to todolists
+          </Anchor>
+        </Box>
       </>
     );
   }
