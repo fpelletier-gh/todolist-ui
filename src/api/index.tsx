@@ -1,8 +1,7 @@
 import axios from "axios";
 import { TodolistSchema, TodoPayload, TodoSchema, UserSchema } from "../types";
 
-/* const base = process.env.API_ENDPOINT; */
-const base = "http://127.0.0.1:1337";
+const base = import.meta.env.VITE_API_ENDPOINT;
 
 const userBase = `${base}/api/users`;
 const sessionBase = `${base}/api/sessions`;
