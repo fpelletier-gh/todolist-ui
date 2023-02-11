@@ -7,16 +7,18 @@ export default function LandingPage() {
   const { user } = useUser();
   return (
     <Flex direction="column" align="center" justify="center">
-      <Title order={1}>Todolists</Title>
-      <Text>A Todolists application to server all your todo needs</Text>
+      <Title order={1} mt="xl">
+        Todolists
+      </Title>
+      <Text my="lg">A Todolists application to serve all your todo needs</Text>
 
       {!user && (
-        <Flex>
-          <Button variant="light" component={Link} to="/login">
-            Login
-          </Button>
-          <Button variant="filled" component={Link} to="/register">
+        <Flex gap="md">
+          <Button w="90px" variant="filled" component={Link} to="/register">
             Register
+          </Button>
+          <Button w="90px" variant="outline" component={Link} to="/login">
+            Login
           </Button>
         </Flex>
       )}
