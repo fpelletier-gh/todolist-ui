@@ -13,7 +13,9 @@ function Root() {
         const lastLocationPathname = JSON.parse(lastLocation).pathname;
         navigate(lastLocationPathname);
       }
+      localStorage.setItem("last_location", JSON.stringify(location));
     }
+
     const saveLastLocation = () => {
       localStorage.setItem("last_location", JSON.stringify(location));
     };
