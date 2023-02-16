@@ -14,9 +14,13 @@ function Root() {
         navigate(lastLocationPathname);
       }
     }
-    window.addEventListener("beforeunload", function () {
+    const saveLastLocation = () => {
       localStorage.setItem("last_location", JSON.stringify(location));
-    });
+    };
+    window.addEventListener("beforeunload", saveLastLocation);
+    return () => {
+      window.removeEventListener("beforeunload", saveLastLocation);
+    };
   }, []);
 
   return (
