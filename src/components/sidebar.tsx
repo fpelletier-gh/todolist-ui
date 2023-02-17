@@ -78,6 +78,7 @@ export default function Sidebar({ closeNavbar }: { closeNavbar: () => void }) {
   }
 
   function handleNewTodolistClick() {
+    closeNavbar();
     openModal({
       title: "New todolist",
       children: <NewTodolistForm />,
