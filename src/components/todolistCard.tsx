@@ -80,11 +80,7 @@ export default function TodolistCard({
               readOnly={true}
             />
           ))}
-          {!todolist.todos[0] && (
-            <Text align="center" fw="500">
-              No todo
-            </Text>
-          )}
+          {!todolist.todos[0] && <Text fw="500">No todo</Text>}
         </Flex>
       </Card>
     </Anchor>

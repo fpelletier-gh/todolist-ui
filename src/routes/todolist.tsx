@@ -104,11 +104,7 @@ export default function Todolist() {
                 todo={todo}
               />
             ))}
-            {!todolist.data?.todos[0] && (
-              <Text align="center" fw="500">
-                No todo
-              </Text>
-            )}
+            {!todolist.data?.todos[0] && <Text fw="500">No todo</Text>}
             {newTodo && (
               <Box pt="xs">
                 <form
