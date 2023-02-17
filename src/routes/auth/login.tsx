@@ -55,8 +55,8 @@ function LoginPage() {
 
   return (
     <>
-      <Container>
-        <Title>Login</Title>
+      <Container pt="xl">
+        <Title mt="xl">Login</Title>
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
           <form onSubmit={form.onSubmit((values) => mutation.mutate(values))}>
             <Stack>
