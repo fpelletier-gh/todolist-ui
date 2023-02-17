@@ -56,6 +56,7 @@ export default function Layout() {
                 component={Link}
                 onClick={closeNavbar}
                 variant="text"
+                to="/"
               >
                 <Title className="logo">Todolists</Title>
               </Anchor>
