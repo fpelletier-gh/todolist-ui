@@ -110,7 +110,7 @@ function App() {
             colorScheme: colorScheme,
           }}
         >
-          <NotificationsProvider position="top-center">
+          <NotificationsProvider>
             <ModalsProvider>
               <UserContextProvider>
                 <RouterProvider router={router} />
