@@ -6,7 +6,7 @@ export default function LandingPage() {
   // TODO: create a nice landing page
   const { user } = useUser();
   return (
-    <Flex direction="column" align="center" justify="center">
+    <Flex direction="column" align="center" justify="center" pt="xl">
       <Title order={1} mt="xl">
         Todolists
       </Title>
