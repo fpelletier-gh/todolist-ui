@@ -6,24 +6,24 @@ function Root() {
   const location = useLocation();
   const navigate = useNavigate();
   useEffect(() => {
-    // @ts-ignore
-    if (performance.getEntriesByType("navigation")[0].type === "reload") {
-      const lastLocation = localStorage.getItem("last_location");
-      if (lastLocation) {
-        const lastLocationPathname = JSON.parse(lastLocation).pathname;
-        navigate(lastLocationPathname);
-      }
-      localStorage.setItem("last_location", JSON.stringify(location));
-    }
+    const pageAccessedByReload =
+      (window.performance.navigation &&
+        window.performance.navigation.type === 1) ||
+      window.performance
+        .getEntriesByType("navigation")
+        // @ts-ignore
+        .map((nav) => nav.type)
+        .includes("reload");
 
-    const saveLastLocation = () => {
-      localStorage.setItem("last_location", JSON.stringify(location));
-    };
-    window.addEventListener("beforeunload", saveLastLocation);
-    return () => {
-      window.removeEventListener("beforeunload", saveLastLocation);
-    };
+    if (pageAccessedByReload) {
+      const lastLocation = localStorage.getItem("last_location");
+      navigate(lastLocation || "/todolist", { replace: true });
+    }
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("last_location", location.pathname);
+  });
 
   return (
     <main className="App">
