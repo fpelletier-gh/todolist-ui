@@ -52,7 +52,11 @@ export default function Layout() {
         >
           <Navbar.Section>
             <Group position="apart">
-              <Anchor component={Link} variant="text" to="/todolist">
+              <Anchor
+                component={Link}
+                onClick={closeNavbar}
+                variant="text"
+              >
                 <Title className="logo">Todolists</Title>
               </Anchor>
               {isOpen && <CloseButton onClick={toggleNavbar} />}
