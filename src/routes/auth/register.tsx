@@ -68,9 +68,8 @@ function RegisterPage() {
 
   return (
     <>
-      <Container>
-        <Title>Register</Title>
-
+      <Container pt="xl">
+        <Title mt="xl">Register</Title>
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
           <form onSubmit={form.onSubmit((values) => mutation.mutate(values))}>
             <Stack>
