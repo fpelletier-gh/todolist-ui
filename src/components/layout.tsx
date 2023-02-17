@@ -10,7 +10,7 @@ import {
   CloseButton,
   Group,
   Anchor,
-  Center,
+  ScrollArea,
 } from "@mantine/core";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
@@ -63,18 +63,28 @@ export default function Layout() {
               {isOpen && <CloseButton onClick={toggleNavbar} />}
             </Group>
           </Navbar.Section>
-          <Navbar.Section grow mt="md">
+          <Navbar.Section
+            component={ScrollArea}
+            type="scroll"
+            scrollbarSize={4}
+            grow
+            mt="md"
+          >
             <Sidebar closeNavbar={closeNavbar} />
           </Navbar.Section>
         </Navbar>
       }
       footer={
-        <Footer height={60} p="md">
-          <Center>Created by Francis Pelletier</Center>
+        <Footer
+          display="flex"
+          sx={{ alignItems: "center", justifyContent: "center" }}
+          height={40}
+        >
+          Created by Francis Pelletier
         </Footer>
       }
       header={
-        <Header height={{ base: 55, md: 70 }} p="md">
+        <Header height={{ base: 55 }} p="md">
           <div
             style={{
               display: "flex",
