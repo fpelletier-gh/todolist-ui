@@ -21,11 +21,12 @@ export default function NavLink({
       onMouseEnter={() => setIsVisible(true)}
       onMouseLeave={() => setIsVisible(false)}
       underline={false}
-      w="100%"
-      px="xs"
+      w={{ base: "100%", sm: 185, lg: 265 }}
+      pl="xs"
+      pr={4}
       sx={(theme) => ({
         borderRadius: "5px",
-        overflowX: "hidden",
+        overflow: "hidden",
         "&:hover": {
           backgroundColor:
             theme.colorScheme === "dark"
@@ -37,13 +38,7 @@ export default function NavLink({
       to={to}
       key={todolistId}
     >
-      <Group
-        w="100%"
-        sx={{ overflow: "hidden" }}
-        position="apart"
-        noWrap={true}
-        onClick={closeNavbar}
-      >
+      <Group position="apart" noWrap={true} onClick={closeNavbar}>
         <Text truncate={true}>{title}</Text>
         <Box mr="md" w="10px">
           <TodolistMenu
