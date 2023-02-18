@@ -8,7 +8,7 @@ export default function colorSchemeToggleButton() {
   return (
     <ActionIcon
       variant="transparent"
-      color={dark ? "yellow.1" : "blue"}
+      color={dark ? "blue.2" : "blue"}
       onClick={() => toggleColorScheme()}
       title="Toggle color scheme"
     >
