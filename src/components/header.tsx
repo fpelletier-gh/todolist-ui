@@ -1,7 +1,21 @@
-import { Anchor, Avatar, Button, Group, Menu, Text } from "@mantine/core";
+import {
+  Anchor,
+  Avatar,
+  Button,
+  Group,
+  MediaQuery,
+  Menu,
+  Text,
+} from "@mantine/core";
 import { showNotification, updateNotification } from "@mantine/notifications";
 import { useSpotlight } from "@mantine/spotlight";
-import { IconSearch, IconX } from "@tabler/icons";
+import {
+  IconHome,
+  IconMail,
+  IconSearch,
+  IconUserCircle,
+  IconX,
+} from "@tabler/icons";
 import { useMutation } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../context/user";
@@ -56,7 +70,7 @@ export default function Header() {
             <Menu shadow="md" width={200}>
               <Menu.Target>
                 <Avatar
-                  variant="filled"
+                  variant="gradient"
                   color="blue"
                   radius="xl"
                   className="avatar"
@@ -80,21 +94,38 @@ export default function Header() {
                   <Text size="xs">{user.email}</Text>
                 </Menu.Label>
                 <Menu.Divider />
-                <Menu.Item component={Link} to="/todolist">
+                <Menu.Item
+                  icon={<IconHome size={14} />}
+                  component={Link}
+                  to="/todolist"
+                >
                   Home
                 </Menu.Item>
-                <Menu.Item component={Link} to="/profile">
+                <Menu.Item
+                  icon={<IconUserCircle size={14} />}
+                  component={Link}
+                  to="/profile"
+                >
                   Profile
                 </Menu.Item>
-                <Menu.Item component={Link} to="/todolist/contact">
+                <Menu.Item
+                  icon={<IconMail size={14} />}
+                  component={Link}
+                  to="/todolist/contact"
+                >
                   Contact
                 </Menu.Item>
                 <Menu.Item
                   icon={<IconSearch size={14} />}
                   rightSection={
-                    <Text size="xs" color="dimmed">
-                      Ctrl-K
-                    </Text>
+                    <MediaQuery
+                      smallerThan="sm"
+                      styles={{ visibility: "hidden" }}
+                    >
+                      <Text size="xs" color="dimmed">
+                        Ctrl-K
+                      </Text>
+                    </MediaQuery>
                   }
                   onClick={() => {
                     spotlight.openSpotlight();
