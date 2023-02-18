@@ -58,9 +58,12 @@ export default function Sidebar({ closeNavbar }: { closeNavbar: () => void }) {
             autosize
             {...register("description")}
           />
-          <Group>
-            <Button type="submit">Save</Button>
+          <Group spacing="xs">
+            <Button px="lg" size="xs" variant="gradient" type="submit">
+              Save
+            </Button>
             <Button
+              size="xs"
               variant="subtle"
               onClick={() => closeAllModals()}
               type="button"

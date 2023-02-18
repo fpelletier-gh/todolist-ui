@@ -119,22 +119,21 @@ export default function Todolist() {
                     {...form.getInputProps("title")}
                   />
                   <Button
+                    size="xs"
+                    px="lg"
                     my="xs"
                     mr="xs"
-                    radius="md"
-                    variant="filled"
-                    compact
+                    variant="gradient"
                     className="submitBtn"
                     type="submit"
                   >
                     Save
                   </Button>
                   <Button
+                    size="xs"
                     my="xs"
-                    radius="md"
                     variant="subtle"
                     className="cancelBtn"
-                    compact
                     onClick={handleCancelFormSubmit}
                     type="button"
                   >
@@ -146,8 +145,8 @@ export default function Todolist() {
             {!newTodo && (
               <Flex pt="md">
                 <Button
-                  compact
-                  radius="md"
+                  size="xs"
+                  variant="gradient"
                   className="newTodo"
                   onClick={handleNewTodo}
                 >
