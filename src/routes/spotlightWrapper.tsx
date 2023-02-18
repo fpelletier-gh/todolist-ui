@@ -105,7 +105,7 @@ export default function SpotlightWrapper({
 
   const actions: SpotlightAction[] = [
     {
-      title: "Todolists",
+      title: "Home",
       description: "Get to the todolists page",
       onTrigger: () => navigate(`/todolist`),
       icon: <IconHome size={18} />,
