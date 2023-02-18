@@ -88,10 +88,10 @@ export default function Sidebar({ closeNavbar }: { closeNavbar: () => void }) {
   return (
     <Flex direction="column" align="start">
       <Button
+        ml="xs"
         my="md"
-        variant="filled"
-        radius="md"
-        compact
+        size="xs"
+        variant="gradient"
         onClick={handleNewTodolistClick}
       >
         New todolist
