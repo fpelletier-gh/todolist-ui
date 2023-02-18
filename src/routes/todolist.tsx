@@ -91,7 +91,7 @@ export default function Todolist() {
                 navigatePath="/todolist"
               />
             </Group>
-            <Text size="sm" color="dimmed">
+            <Text size="sm" sx={{ whiteSpace: "pre-line" }} color="dimmed">
               {todolist.data?.description}
             </Text>
           </Card.Section>
