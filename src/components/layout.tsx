@@ -60,7 +60,7 @@ export default function Layout() {
               >
                 <Title className="logo">Todolists</Title>
               </Anchor>
-              {isOpen && <CloseButton onClick={toggleNavbar} />}
+              {isOpen && <CloseButton size="lg" onClick={closeNavbar} />}
             </Group>
           </Navbar.Section>
           <Navbar.Section
