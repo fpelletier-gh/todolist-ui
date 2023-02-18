@@ -58,7 +58,13 @@ export default function TodolistCard({
               navigatePath="/todolist"
             />
           </Group>
-          <Text truncate={true} size="sm" color="dimmed">
+          <Text
+            truncate={true}
+            sx={{ whiteSpace: "pre-line", overflowY: "hidden" }}
+            mah="20px"
+            size="sm"
+            color="dimmed"
+          >
             {todolist.description}
           </Text>
         </Card.Section>
