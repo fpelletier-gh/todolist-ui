@@ -1,4 +1,4 @@
-import { Button, Text } from "@mantine/core";
+import { Button, MediaQuery, Text } from "@mantine/core";
 import { useSpotlight } from "@mantine/spotlight";
 import { IconSearch } from "@tabler/icons";
 
@@ -29,21 +29,23 @@ export default function Search() {
       })}
     >
       Search
-      <Text
-        color="gray.7"
-        mr="0"
-        px="xs"
-        sx={(theme) => ({
-          backgroundColor:
-            theme.colorScheme === "dark"
-              ? theme.colors.dark[5]
-              : theme.colors.gray[3],
-          borderRadius: theme.radius.sm,
-          marginLeft: "40px",
-        })}
-      >
-        Ctrl + K
-      </Text>
+      <MediaQuery smallerThan="sm" styles={{ visibility: "hidden" }}>
+        <Text
+          color="gray.7"
+          mr="0"
+          px="xs"
+          sx={(theme) => ({
+            backgroundColor:
+              theme.colorScheme === "dark"
+                ? theme.colors.dark[5]
+                : theme.colors.gray[3],
+            borderRadius: theme.radius.sm,
+            marginLeft: "40px",
+          })}
+        >
+          Ctrl + K
+        </Text>
+      </MediaQuery>
     </Button>
   );
 }
