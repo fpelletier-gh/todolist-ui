@@ -5,6 +5,7 @@ import {
   Menu,
   Stack,
   Text,
+  Textarea,
   TextInput,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
@@ -110,12 +111,12 @@ export default function TodolistMenu({
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack>
           <TextInput label="Title" placeholder="Title" {...register("title")} />
-          <TextInput
+          <Textarea
             label="Description"
             placeholder="Description"
+            autosize
             {...register("description")}
           />
-
           <Group>
             <Button type="submit">Save</Button>
             <Button
