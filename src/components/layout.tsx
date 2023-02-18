@@ -77,10 +77,21 @@ export default function Layout() {
       footer={
         <Footer
           display="flex"
-          sx={{ alignItems: "center", justifyContent: "center" }}
+          sx={{
+            fontSize: "14px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
           height={40}
         >
-          Created by Francis Pelletier
+          Created by
+          <Anchor pl={5} href="https://francispelletier.ca">
+            Francis Pelletier
+          </Anchor>
+          , find me on
+          <Anchor pl={5} href="https://github.com/fpelletier-gh">
+            Github
+          </Anchor>
         </Footer>
       }
       header={
