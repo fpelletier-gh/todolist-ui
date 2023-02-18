@@ -65,9 +65,12 @@ export default function NewTodolistCard() {
             autosize
             {...register("description")}
           />
-          <Group>
-            <Button type="submit">Save</Button>
+          <Group spacing="xs">
+            <Button px="lg" size="xs" variant="gradient" type="submit">
+              Save
+            </Button>
             <Button
+              size="xs"
               variant="subtle"
               onClick={() => closeAllModals()}
               type="button"
