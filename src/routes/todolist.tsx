@@ -44,6 +44,7 @@ export default function Todolist() {
       return <Loader />;
     },
     onSuccess: () => {
+      queryClient.invalidateQueries(["todolists"]);
       queryClient.invalidateQueries(["todolist"]);
       setNewTodo(false);
     },
