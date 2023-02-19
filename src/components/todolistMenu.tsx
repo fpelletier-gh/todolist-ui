@@ -16,6 +16,7 @@ import { useDeleteTodolist, useEditTodolist, useTodolist } from "../hooks";
 import { closeAllModals, openConfirmModal, openModal } from "@mantine/modals";
 import { useForm } from "react-hook-form";
 import { TodolistPayloadSchema } from "../types";
+import SubmitButtonGroup from "./submitButtonGroup";
 
 export default function TodolistMenu({
   todolistId,
@@ -117,16 +118,7 @@ export default function TodolistMenu({
             autosize
             {...register("description")}
           />
-          <Group>
-            <Button type="submit">Save</Button>
-            <Button
-              variant="subtle"
-              onClick={() => closeAllModals()}
-              type="button"
-            >
-              cancel
-            </Button>
-          </Group>
+          <SubmitButtonGroup />
         </Stack>
       </form>
     );

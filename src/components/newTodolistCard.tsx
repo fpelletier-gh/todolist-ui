@@ -3,8 +3,6 @@ import {
   Card,
   Anchor,
   Title,
-  Button,
-  Group,
   Stack,
   Textarea,
   TextInput,
@@ -17,6 +15,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useNewTodolist } from "../hooks";
 import { TodolistPayloadSchema } from "../types";
+import SubmitButtonGroup from "./submitButtonGroup";
 
 export default function NewTodolistCard() {
   const navigate = useNavigate();
@@ -65,19 +64,7 @@ export default function NewTodolistCard() {
             autosize
             {...register("description")}
           />
-          <Group spacing="xs">
-            <Button px="lg" size="xs" variant="gradient" type="submit">
-              Save
-            </Button>
-            <Button
-              size="xs"
-              variant="subtle"
-              onClick={() => closeAllModals()}
-              type="button"
-            >
-              cancel
-            </Button>
-          </Group>
+          <SubmitButtonGroup />
         </Stack>
       </form>
     );
