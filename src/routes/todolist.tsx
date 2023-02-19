@@ -120,7 +120,6 @@ export default function Todolist() {
                     {...form.getInputProps("title")}
                   />
                   <Button
-                    size="xs"
                     px="lg"
                     my="xs"
                     mr="xs"
@@ -131,7 +130,6 @@ export default function Todolist() {
                     Save
                   </Button>
                   <Button
-                    size="xs"
                     my="xs"
                     variant="subtle"
                     className="cancelBtn"
@@ -146,7 +144,6 @@ export default function Todolist() {
             {!newTodo && (
               <Flex pt="md">
                 <Button
-                  size="xs"
                   variant="gradient"
                   className="newTodo"
                   onClick={handleNewTodo}
