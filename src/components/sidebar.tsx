@@ -82,7 +82,6 @@ export default function Sidebar({ closeNavbar }: { closeNavbar: () => void }) {
       <Button
         ml="xs"
         my="md"
-        size="xs"
         variant="gradient"
         onClick={handleNewTodolistClick}
       >
