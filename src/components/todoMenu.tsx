@@ -1,24 +1,11 @@
-import {
-  ActionIcon,
-  Button,
-  Group,
-  Menu,
-  Stack,
-  Text,
-  TextInput,
-} from "@mantine/core";
-import {
-  IconDots,
-  IconEdit,
-  IconSettings,
-  IconTrash,
-  IconX,
-} from "@tabler/icons";
+import { ActionIcon, Menu, Stack, Text, TextInput } from "@mantine/core";
+import { IconDots, IconEdit, IconTrash, IconX } from "@tabler/icons";
 import { useDeleteTodo, useTodo, useUpdateTodo } from "../hooks";
 import { closeAllModals, openConfirmModal, openModal } from "@mantine/modals";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 import { showNotification } from "@mantine/notifications";
+import SubmitButtonGroup from "./submitButtonGroup";
 
 export default function TodoMenu({
   todolistId,
@@ -99,16 +86,7 @@ export default function TodoMenu({
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack>
           <TextInput label="Title" placeholder="Title" {...register("title")} />
-          <Group>
-            <Button type="submit">Save</Button>
-            <Button
-              variant="subtle"
-              onClick={() => closeAllModals()}
-              type="button"
-            >
-              cancel
-            </Button>
-          </Group>
+          <SubmitButtonGroup />
         </Stack>
       </form>
     );

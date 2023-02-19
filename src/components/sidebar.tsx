@@ -1,4 +1,4 @@
-import { Button, Flex, Group, Stack, Textarea, TextInput } from "@mantine/core";
+import { Button, Flex, Stack, Textarea, TextInput } from "@mantine/core";
 import { closeAllModals, openModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import { IconX } from "@tabler/icons";
@@ -8,6 +8,7 @@ import { useNewTodolist, useTodolists } from "../hooks";
 import { TodolistPayloadSchema, TodolistSchema } from "../types";
 import NavLink from "./navLink";
 import { useFocusTrap } from "@mantine/hooks";
+import SubmitButtonGroup from "./submitButtonGroup";
 
 export default function Sidebar({ closeNavbar }: { closeNavbar: () => void }) {
   const todolists = useTodolists();
@@ -58,19 +59,7 @@ export default function Sidebar({ closeNavbar }: { closeNavbar: () => void }) {
             autosize
             {...register("description")}
           />
-          <Group spacing="xs">
-            <Button px="lg" size="xs" variant="gradient" type="submit">
-              Save
-            </Button>
-            <Button
-              size="xs"
-              variant="subtle"
-              onClick={() => closeAllModals()}
-              type="button"
-            >
-              cancel
-            </Button>
-          </Group>
+          <SubmitButtonGroup />
         </Stack>
       </form>
     );
