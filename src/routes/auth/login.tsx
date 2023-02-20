@@ -56,14 +56,25 @@ const useStyles = createStyles((theme) => ({
   },
 
   header: {
+    zIndex: 10,
     position: "fixed",
     top: 0,
     right: 0,
     color: theme.colorScheme === "dark" ? theme.colors.gray[7] : theme.black,
-    paddingTop: theme.spacing.md,
-    paddingBottom: theme.spacing.md,
-    paddingRight: theme.spacing.xl,
-    paddingLeft: theme.spacing.xl,
+    padding: theme.spacing.md,
+  },
+
+  headerTitle: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    textAlign: "center",
+    padding: theme.spacing.md,
+
+    "@media (max-width: 520px)": {
+      textAlign: "left",
+    },
   },
 
   title: {
@@ -77,7 +88,6 @@ const useStyles = createStyles((theme) => ({
 
     "@media (max-width: 520px)": {
       fontSize: 28,
-      textAlign: "left",
     },
   },
 
@@ -90,7 +100,6 @@ const useStyles = createStyles((theme) => ({
     textAlign: "center",
 
     "@media (max-width: 520px)": {
-      textAlign: "left",
       fontSize: theme.fontSizes.md,
     },
   },
@@ -176,6 +185,9 @@ export default function LoginPage() {
           </div>
           <ColorSchemeToggleButton />
         </Group>
+        <Title order={3} className={classes.headerTitle} variant="gradient">
+          Todolists
+        </Title>
         <Title className={classes.title}>Login</Title>
 
         <Container maw="400px" pt="xl">
