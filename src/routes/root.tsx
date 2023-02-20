@@ -1,10 +1,11 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Container, Flex } from "@mantine/core";
 import { useEffect } from "react";
 
 function Root() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Redirect user to previous location after reload
   useEffect(() => {
     const pageAccessedByReload =
       (window.performance.navigation &&
@@ -27,11 +28,7 @@ function Root() {
 
   return (
     <main className="App">
-      <Container>
-        <Flex justify="center">
-          <Outlet />
-        </Flex>
-      </Container>
+      <Outlet />
     </main>
   );
 }
