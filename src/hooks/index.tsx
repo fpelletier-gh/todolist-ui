@@ -127,6 +127,9 @@ export function useUpdateTodo() {
       queryClient.invalidateQueries({
         queryKey: ["todolist", newTodolist?.todolistId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["todolists"],
+      });
     },
   });
   return { updateTodo: mutate };
