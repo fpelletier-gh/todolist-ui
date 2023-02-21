@@ -82,16 +82,50 @@ export function useUpdateTodo() {
     }) => {
       return updateTodo({ todolistId, todoId, payload });
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["todolist"]);
+    onMutate: async (newTodolist) => {
+      await queryClient.cancelQueries({ queryKey: ["todolists"] });
+      await queryClient.cancelQueries({
+        queryKey: ["todolist", newTodolist.todolistId],
+      });
+
+      const previousTodolist = queryClient.getQueryData<TodolistSchema>([
+        "todolist",
+        newTodolist.todolistId,
+      ]);
+
+      const updatedTodos = previousTodolist?.todos.map((todo: any) => {
+        if (todo.todoId === newTodolist.todoId) {
+          return {
+            ...todo,
+            ...newTodolist.payload,
+          };
+        }
+        return todo;
+      });
+
+      queryClient.setQueryData<TodolistSchema>(
+        ["todolist", newTodolist.todolistId],
+        (old) => old && { ...old, todos: [...(updatedTodos || [])] }
+      );
+
+      return { previousTodolist, newTodolist };
     },
-    onError: () => {
+    onError: (err, newTodolist, context) => {
+      queryClient.setQueryData(
+        ["todos", context?.newTodolist.todolistId],
+        context?.previousTodolist
+      );
       showNotification({
         id: "update-todolist",
         title: "Error",
         message: "Could not update todolist",
         color: "red",
         icon: <IconX />,
+      });
+    },
+    onSettled: (newTodolist) => {
+      queryClient.invalidateQueries({
+        queryKey: ["todolist", newTodolist?.todolistId],
       });
     },
   });

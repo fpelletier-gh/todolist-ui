@@ -14,7 +14,6 @@ export default function Todo({
   const { updateTodo } = useUpdateTodo();
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
-  // TODO: add optimistic update for checkbox
   function handleCheckboxChange(e: React.ChangeEvent<HTMLInputElement>) {
     updateTodo({
       todolistId: todolistId,

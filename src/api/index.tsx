@@ -86,7 +86,7 @@ export async function deleteTodolist(todolistId: string) {
   return axios.delete(`${todolistBase}/${todolistId}`).then((res) => res.data);
 }
 
-export function updateTodo({
+export async function updateTodo({
   todolistId,
   todoId,
   payload,
@@ -94,11 +94,8 @@ export function updateTodo({
   todolistId: string;
   todoId: string;
   payload: Partial<TodoPayload>;
-}) {
-  return axios.put<TodolistSchema>(
-    `${todolistBase}/${todolistId}/${todoId}`,
-    payload
-  );
+}): Promise<TodolistSchema> {
+  return axios.put(`${todolistBase}/${todolistId}/${todoId}`, payload);
 }
 
 export async function deleteTodo({
