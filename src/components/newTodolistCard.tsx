@@ -10,8 +10,8 @@ import {
 import { useFocusTrap } from "@mantine/hooks";
 import { closeAllModals, openModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
-import { IconX } from "@tabler/icons";
 import { useForm } from "react-hook-form";
+import { IconPencilPlus } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { useNewTodolist } from "../hooks";
 import { TodolistPayloadSchema } from "../types";

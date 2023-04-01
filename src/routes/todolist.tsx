@@ -20,7 +20,7 @@ import { createTodo } from "../api";
 import Todo from "../components/todo";
 import { TodoSchema } from "../types";
 import { useTodolist } from "../hooks";
-import { IconX } from "@tabler/icons";
+import { IconX } from "@tabler/icons-react";
 import TodolistMenu from "../components/todolistMenu";
 
 export default function Todolist() {

@@ -17,7 +17,7 @@ import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "../../api";
 import { Link, useNavigate } from "react-router-dom";
-import { IconX } from "@tabler/icons";
+import { IconX } from "@tabler/icons-react";
 import { Dots } from "../dots";
 import ColorSchemeToggleButton from "../../components/colorSchemeToggleButton";
 

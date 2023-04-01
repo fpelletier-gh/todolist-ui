@@ -1,6 +1,6 @@
 import { Button, MediaQuery, Text } from "@mantine/core";
 import { useSpotlight } from "@mantine/spotlight";
-import { IconSearch } from "@tabler/icons";
+import { IconSearch } from "@tabler/icons-react";
 
 export default function Search() {
   const spotlight = useSpotlight();

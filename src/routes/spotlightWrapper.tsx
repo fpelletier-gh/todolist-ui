@@ -1,11 +1,11 @@
 import { SpotlightProvider } from "@mantine/spotlight";
 import {
+  IconArticle,
   IconCheckbox,
-  IconDashboard,
+  IconChecklist,
   IconHome,
   IconSearch,
-  IconX,
-} from "@tabler/icons";
+} from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { useNewTodolist, useTodolists } from "../hooks";
 import { TodolistPayloadSchema, TodolistSchema } from "../types";

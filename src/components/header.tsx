@@ -13,9 +13,10 @@ import {
   IconHome,
   IconMail,
   IconSearch,
+  IconStar,
   IconUserCircle,
   IconX,
-} from "@tabler/icons";
+} from "@tabler/icons-react";
 import { useMutation } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../context/user";

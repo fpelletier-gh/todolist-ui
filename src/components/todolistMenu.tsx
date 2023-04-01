@@ -9,7 +9,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { IconDots, IconEdit, IconTrash, IconX } from "@tabler/icons";
+import { IconDots, IconEdit, IconTrash, IconX } from "@tabler/icons-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useDeleteTodolist, useEditTodolist, useTodolist } from "../hooks";

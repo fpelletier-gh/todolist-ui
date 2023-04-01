@@ -1,5 +1,5 @@
 import { ActionIcon, Menu, Stack, Text, TextInput } from "@mantine/core";
-import { IconDots, IconEdit, IconTrash, IconX } from "@tabler/icons";
+import { IconDots, IconEdit, IconTrash, IconX } from "@tabler/icons-react";
 import { useDeleteTodo, useTodo, useUpdateTodo } from "../hooks";
 import { closeAllModals, openConfirmModal, openModal } from "@mantine/modals";
 import { useForm } from "react-hook-form";
