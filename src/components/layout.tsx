@@ -11,6 +11,7 @@ import {
   Group,
   Anchor,
   ScrollArea,
+  createStyles,
   Affix,
 } from "@mantine/core";
 import { useState } from "react";
@@ -20,8 +21,26 @@ import HeaderComponent from "./header";
 import { Link } from "react-router-dom";
 import NewButtonMenu from "./newButtonMenu";
 
+const useStyles = createStyles((theme) => ({
+  navbar: {
+    backgroundColor:
+      theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.white,
+    paddingBottom: 0,
+  },
+
+  links: {
+    marginLeft: -theme.spacing.md,
+    marginRight: -theme.spacing.md,
+  },
+
+  linksInner: {
+    paddingTop: theme.spacing.xl,
+    paddingBottom: theme.spacing.xl,
+  },
+}));
 
 export default function Layout() {
+  const { classes } = useStyles();
   const theme = useMantineTheme();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -66,14 +85,10 @@ export default function Layout() {
               {isOpen && <CloseButton size="lg" onClick={closeNavbar} />}
             </Group>
           </Navbar.Section>
-          <Navbar.Section
-            component={ScrollArea}
-            type="scroll"
-            scrollbarSize={4}
-            grow
-            mt="md"
-          >
-            <Sidebar closeNavbar={closeNavbar} />
+          <Navbar.Section grow className={classes.links} component={ScrollArea}>
+            <div className={classes.linksInner}>
+              <Sidebar closeNavbar={closeNavbar} />
+            </div>
           </Navbar.Section>
         </Navbar>
       }
