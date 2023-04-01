@@ -1,5 +1,11 @@
 import axios from "axios";
-import { TodolistSchema, TodoPayload, TodoSchema, UserSchema } from "../types";
+import {
+  TodolistPayloadSchema,
+  TodolistSchema,
+  TodoPayload,
+  TodoSchema,
+  UserSchema,
+} from "../types";
 
 const base = import.meta.env.VITE_API_ENDPOINT;
 
@@ -69,17 +75,14 @@ export async function createTodolist(payload: {
   return axios.post(todolistBase, payload).then((res) => res.data);
 }
 
-export function updateTodolist({
+export async function updateTodolist({
   todolistId,
   payload,
 }: {
   todolistId: string;
-  payload: {
-    title: string;
-    description: string;
-  };
-}) {
-  return axios.put<TodolistSchema>(`${todolistBase}/${todolistId}`, payload);
+  payload: TodolistPayloadSchema;
+}): Promise<TodolistSchema> {
+  return axios.put(`${todolistBase}/${todolistId}`, payload);
 }
 
 export async function deleteTodolist(todolistId: string) {
