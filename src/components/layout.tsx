@@ -11,12 +11,15 @@ import {
   Group,
   Anchor,
   ScrollArea,
+  Affix,
 } from "@mantine/core";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./sidebar";
 import HeaderComponent from "./header";
 import { Link } from "react-router-dom";
+import NewButtonMenu from "./newButtonMenu";
+
 
 export default function Layout() {
   const theme = useMantineTheme();
@@ -119,6 +122,9 @@ export default function Layout() {
       }
     >
       <Outlet />
+      <Affix position={{ bottom: "60px", right: "30px" }}>
+        <NewButtonMenu />
+      </Affix>
     </AppShell>
   );
 }
