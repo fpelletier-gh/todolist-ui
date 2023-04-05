@@ -80,9 +80,23 @@ export const routes = [
             path: "/todolist/:todolistId",
             element: <Todolist />,
           },
+      {
+        path: "/user",
+        element: (
+          <RequireAuth>
+            <SpotlightWrapper>
+              <Layout />
+            </SpotlightWrapper>
+          </RequireAuth>
+        ),
+        children: [
           {
             path: "contact",
             element: <Contact />,
+          },
+          {
+            path: "profile",
+            element: <Profile />,
           },
         ],
       },

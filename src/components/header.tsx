@@ -105,14 +105,14 @@ export default function Header() {
                 <Menu.Item
                   icon={<IconUserCircle size={14} />}
                   component={Link}
-                  to="/profile"
+                  to="/user/profile"
                 >
                   Profile
                 </Menu.Item>
                 <Menu.Item
                   icon={<IconMail size={14} />}
                   component={Link}
-                  to="/todolist/contact"
+                  to="/user/contact"
                 >
                   Contact
                 </Menu.Item>
