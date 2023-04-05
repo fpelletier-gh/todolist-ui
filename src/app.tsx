@@ -22,6 +22,7 @@ import { useState } from "react";
 import SpotlightWrapper from "./routes/spotlightWrapper";
 import Profile from "./routes/profile";
 import Contact from "./routes/contact";
+import { useLocalStorage } from "@mantine/hooks";
 
 export const routes = [
   {
@@ -93,7 +94,13 @@ const router = createBrowserRouter(routes);
 
 function App() {
   const queryClient = new QueryClient();
-  const [colorScheme, setColorScheme] = useState<ColorScheme>("dark");
+
+  const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
+    key: "mantine-color-scheme",
+    defaultValue: "light",
+    getInitialValueInEffect: true,
+  });
+
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
 
