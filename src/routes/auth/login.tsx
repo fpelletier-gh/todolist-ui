@@ -3,7 +3,6 @@ import {
   Button,
   Container,
   Group,
-  Paper,
   PasswordInput,
   Stack,
   TextInput,
@@ -151,7 +150,7 @@ export default function LoginPage() {
     },
     onSuccess: () => {
       const newUser = async () => await user.login();
-      navigate("/todolist", { state: { user: newUser, replace: true } });
+      navigate("/home/all", { state: { user: newUser, replace: true } });
     },
     onError: () => {
       showNotification({
