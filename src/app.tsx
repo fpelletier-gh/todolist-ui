@@ -13,15 +13,14 @@ import Login from "./routes/auth/login";
 import Register from "./routes/auth/register";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Todolist from "./routes/todolist";
-import Todolists from "./routes/todolists";
 import LandingPage from "./routes/landingPage";
 import RequireAuth from "./routes/requireAuth";
 import Layout from "./components/layout";
 import { ModalsProvider } from "@mantine/modals";
-import { useState } from "react";
 import SpotlightWrapper from "./routes/spotlightWrapper";
 import Profile from "./routes/profile";
 import Contact from "./routes/contact";
+import Home from "./routes/home";
 import { useLocalStorage } from "@mantine/hooks";
 
 export const routes = [
@@ -47,22 +46,6 @@ export const routes = [
         element: <Contact />,
       },
       {
-        path: "/profile",
-        element: (
-          <RequireAuth>
-            <SpotlightWrapper>
-              <Layout />
-            </SpotlightWrapper>
-          </RequireAuth>
-        ),
-        children: [
-          {
-            index: true,
-            element: <Profile />,
-          },
-        ],
-      },
-      {
         path: "/todolist",
         element: (
           <RequireAuth>
@@ -73,13 +56,38 @@ export const routes = [
         ),
         children: [
           {
-            index: true,
-            element: <Todolists />,
-          },
-          {
             path: "/todolist/:todolistId",
             element: <Todolist />,
           },
+        ],
+      },
+      {
+        element: (
+          <RequireAuth>
+            <SpotlightWrapper>
+              <Layout />
+            </SpotlightWrapper>
+          </RequireAuth>
+        ),
+        children: [
+          {
+          },
+      {
+        path: "/home/:tabValue",
+        element: (
+          <RequireAuth>
+            <SpotlightWrapper>
+              <Layout />
+            </SpotlightWrapper>
+          </RequireAuth>
+        ),
+        children: [
+          {
+            index: true,
+            element: <Home />,
+          },
+        ],
+      },
       {
         path: "/user",
         element: (
