@@ -163,3 +163,22 @@ export function useNewTodolist() {
   });
   return { newTodolist: mutate };
 }
+
+export function useFavorites() {
+  const todolists = useTodolists();
+  const notes = useNotes();
+
+  const favoriteTodolists =
+    todolists.data && todolists.data.filter((todolist) => todolist.favorite);
+
+  const favoriteNotes =
+    notes.data && notes.data.filter((note) => note.favorite);
+
+  const favorites = [
+    ...(favoriteTodolists || []),
+    ...(favoriteNotes || []),
+  ].sort((a, b) => {
+    return b.updatedAt.localeCompare(a.updatedAt);
+  });
+  return { favorites };
+}
