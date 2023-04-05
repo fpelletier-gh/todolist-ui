@@ -34,7 +34,6 @@ export default function TodolistCard({
   return (
     <Anchor
       component={Link}
-      key={todolist.todolistId}
       td="none"
       underline={false}
       to={`/todolist/${todolist.todolistId}`}
@@ -47,8 +46,26 @@ export default function TodolistCard({
         p="sm"
         radius="md"
         withBorder
+        sx={(theme) => ({
+          "&:hover": {
+            borderColor:
+              theme.colorScheme === "dark"
+                ? theme.colors.blue[6]
+                : theme.colors.blue[3],
+          },
+        })}
       >
-        <Card.Section withBorder inheritPadding py="xs">
+        <Card.Section
+          withBorder
+          inheritPadding
+          py="xs"
+          sx={(theme) => ({
+            backgroundColor:
+              theme.colorScheme === "dark"
+                ? theme.colors.dark[7]
+                : theme.colors.gray[2],
+          })}
+        >
           <Group noWrap={true} position="apart">
             <Title truncate={true} order={3} size="lg">
               {todolist.title}
