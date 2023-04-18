@@ -18,12 +18,14 @@ function Root() {
 
     if (pageAccessedByReload) {
       const lastLocation = localStorage.getItem("last_location");
-      navigate(lastLocation || "/todolist", { replace: true });
+      navigate(lastLocation || "/home/all", { replace: true });
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("last_location", location.pathname);
+    if (location.pathname !== "/login") {
+      localStorage.setItem("last_location", location.pathname);
+    }
   });
 
   return (
