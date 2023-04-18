@@ -10,14 +10,14 @@ import {
   createStyles,
   Anchor,
 } from "@mantine/core";
-import { useForm } from "@mantine/form";
-import { showNotification } from "@mantine/notifications";
-import { IconX } from "@tabler/icons-react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link, useNavigate } from "react-router-dom";
-import { login } from "../../api";
+import { useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import ColorSchemeToggleButton from "../../components/colorSchemeToggleButton";
+import StyledLoader from "../../components/styledLoader";
 import { useUser } from "../../context/user";
+import { useLogin, useUserQuery } from "../../hooks";
+import { LoginPayloadSchema } from "../../types";
 import { Dots } from "../dots";
 
 const useStyles = createStyles((theme) => ({
@@ -132,40 +132,45 @@ const useStyles = createStyles((theme) => ({
 
 export default function LoginPage() {
   const user = useUser();
-  const form = useForm({
-    initialValues: {
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: {
       email: "",
       password: "",
     },
   });
+  const userQuery = useUserQuery();
+  const { login } = useLogin();
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { classes } = useStyles();
-
-  // TODO: Refactor mutation to custom hook
-  const mutation = useMutation(login, {
-    onMutate: () => {
-      queryClient.invalidateQueries(["user"]);
-    },
-    onSuccess: () => {
-      const newUser = async () => await user.login();
-      navigate("/home/all", { state: { user: newUser, replace: true } });
-    },
-    onError: () => {
-      showNotification({
-        id: "update-todolist",
-        title: "Error",
-        message: "Could not login",
-        color: "red",
-        icon: <IconX />,
-      });
-    },
-  });
+  const lastLocation = localStorage.getItem("last_location");
 
   function handleCancelClick(): void {
-    form.setValues({ email: "", password: "" });
+    reset();
     navigate("/");
+  }
+
+  const onSubmit = (payload: LoginPayloadSchema): void => {
+    login(payload, {
+      onSuccess: (data) => {
+        queryClient.setQueryData(["user"], data.user);
+        queryClient.invalidateQueries(["user"]);
+        user.login(data.user);
+        reset();
+      },
+      onSettled: () => {
+        navigate("/");
+      },
+    });
+  };
+
+  if (userQuery.data) {
+    return <Navigate to={lastLocation ? lastLocation : "/home/all"} />;
+  }
+
+  if (userQuery.isFetching) {
+    return <StyledLoader />;
   }
 
   return (
@@ -190,19 +195,19 @@ export default function LoginPage() {
         <Title className={classes.title}>Login</Title>
 
         <Container maw="400px" pt="xl">
-          <form onSubmit={form.onSubmit((values) => mutation.mutate(values))}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Stack>
               <TextInput
                 label="Email"
                 placeholder="jane@example.com"
                 required
-                {...form.getInputProps("email")}
+                {...register("email")}
               />
               <PasswordInput
                 label="Password"
                 placeholder="Your strong password"
                 required
-                {...form.getInputProps("password")}
+                {...register("password")}
               />
               <Group>
                 <Button px="lg" variant="gradient" type="submit">
