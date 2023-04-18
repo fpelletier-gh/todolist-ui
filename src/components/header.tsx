@@ -1,13 +1,4 @@
-import {
-  Anchor,
-  Avatar,
-  Button,
-  Group,
-  MediaQuery,
-  Menu,
-  Text,
-} from "@mantine/core";
-import { showNotification, updateNotification } from "@mantine/notifications";
+import { Avatar, Group, MediaQuery, Menu, Text } from "@mantine/core";
 import { useSpotlight } from "@mantine/spotlight";
 import {
   IconHome,
@@ -15,9 +6,7 @@ import {
   IconSearch,
   IconStar,
   IconUserCircle,
-  IconX,
 } from "@tabler/icons-react";
-import { useMutation } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../context/user";
 import ColorSchemeToggleButton from "./colorSchemeToggleButton";
@@ -28,37 +17,9 @@ export default function Header() {
   const navigate = useNavigate();
   const spotlight = useSpotlight();
 
-  const logoutMutation = useMutation(logout, {
-    onMutate: () => {
-      showNotification({
-        id: "logout",
-        title: "Logging out...",
-        message: "",
-      });
-    },
-    onSuccess: () => {
-      logout();
-
-      updateNotification({
-        id: "logout",
-        title: "Success",
-        message: "Successfully logged out",
-      });
-      navigate("/login");
-    },
-    onError: () => {
-      updateNotification({
-        id: "logout",
-        title: "Error",
-        message: "Could not logout",
-        color: "red",
-        icon: <IconX />,
-      });
-    },
-  });
-
   function handleLogoutClick() {
-    logoutMutation.mutate();
+    logout();
+    navigate("/");
   }
 
   return (
@@ -68,7 +29,7 @@ export default function Header() {
           <Search />
           <Group noWrap>
             <ColorSchemeToggleButton />
-            <Menu shadow="md" width={200}>
+            <Menu shadow="md" arrowOffset={20} width={200} withArrow>
               <Menu.Target>
                 <Avatar
                   variant="gradient"
@@ -79,7 +40,7 @@ export default function Header() {
                     cursor: "pointer",
                   }}
                 >
-                  {user?.username[0].toUpperCase()}
+                  {user.username[0].toUpperCase()}
                 </Avatar>
               </Menu.Target>
 
@@ -88,8 +49,7 @@ export default function Header() {
                   <Text size="sm">
                     Signed in as{" "}
                     {user.username
-                      ? user?.username[0].toUpperCase() +
-                        user?.username.slice(1)
+                      ? user.username[0].toUpperCase() + user.username.slice(1)
                       : ""}
                   </Text>
                   <Text size="xs">{user.email}</Text>
@@ -98,7 +58,7 @@ export default function Header() {
                 <Menu.Item
                   icon={<IconHome size={14} />}
                   component={Link}
-                  to="/todolist"
+                  to="/home/all"
                 >
                   Home
                 </Menu.Item>
