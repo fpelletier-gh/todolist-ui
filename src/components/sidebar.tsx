@@ -7,6 +7,7 @@ import {
 import {
   useNewTodolist,
   useTodolists,
+  useFavorites,
 } from "../hooks";
 import LinksGroup from "./linksGroup";
 import LinkNav from "./linkNav";
@@ -17,10 +18,28 @@ export default function Sidebar({ closeNavbar }: { closeNavbar: () => void }) {
   const navigate = useNavigate();
   const { newTodolist } = useNewTodolist();
   const todolists = useTodolists();
+  const { favorites } = useFavorites();
 
   if (todolists.error instanceof Error) {
     return <Text>Error: {todolists.error.message}</Text>;
   }
+
+  const favoriteLinks =
+    favorites &&
+    favorites.map((item) => {
+      if ("noteId" in item) {
+        return {
+          label: item.title,
+          link: `/note/${item.noteId}`,
+          id: item.noteId,
+        };
+      }
+      return {
+        label: item.title,
+        link: `/todolist/${item.todolistId}`,
+        id: item.todolistId,
+      };
+    });
 
   const todolistsLinks =
     todolists.data &&
@@ -40,6 +59,12 @@ export default function Sidebar({ closeNavbar }: { closeNavbar: () => void }) {
         label="Home"
         icon={IconHome}
         link="/home/all"
+        closeNavbar={closeNavbar}
+      />
+      <LinksGroup
+        label="Favorites"
+        icon={IconStar}
+        links={favoriteLinks}
         closeNavbar={closeNavbar}
       />
       <LinksGroup
