@@ -43,6 +43,25 @@ export interface TodolistSchema {
   todos: TodoSchema[];
 }
 
+export interface NotePayloadSchema {
+  title: string;
+  content: string;
+  favorite?: boolean;
+}
+
+export interface NoteSchema {
+  _id: string;
+  user: string;
+  noteId: string;
+  createdAt: string;
+  updatedAt: string;
+  valid: boolean;
+  favorite: boolean;
+  __v: number;
+  content: string;
+  title: string;
+}
+
 export interface User {
   _id: string;
   email: string;
