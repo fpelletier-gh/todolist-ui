@@ -18,9 +18,15 @@ export interface TodoSchema {
   complete: boolean;
 }
 
+export interface LoginPayloadSchema {
+  email: string;
+  password: string;
+}
+
 export interface TodolistPayloadSchema {
   description: string;
   title: string;
+  favorite?: boolean;
 }
 
 export interface TodolistSchema {
@@ -31,6 +37,7 @@ export interface TodolistSchema {
   updatedAt: string;
   valid: boolean;
   __v: number;
+  favorite: boolean;
   description: string;
   title: string;
   todos: TodoSchema[];
