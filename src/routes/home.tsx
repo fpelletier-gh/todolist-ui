@@ -3,6 +3,7 @@ import { useMediaQuery } from "@mantine/hooks";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Favorites from "./favorites";
+import Notes from "./notes";
 import Todolists from "./todolists";
 
 export default function Home() {
@@ -17,6 +18,10 @@ export default function Home() {
   const [maxTodolistsCardNumber, setMaxTodolistsCardNumber] = useState<
     number | undefined
   >(maxCardNumber);
+  const [maxNotesCardNumber, setMaxNotesCardNumber] = useState<
+    number | undefined
+  >(maxCardNumber);
+
   function toggleShowMoreFavorites() {
     if (maxFavoritesCardNumber === undefined) {
       setMaxFavoritesCardNumber(maxCardNumber);
@@ -30,6 +35,14 @@ export default function Home() {
       setMaxTodolistsCardNumber(maxCardNumber);
     } else {
       setMaxTodolistsCardNumber(undefined);
+    }
+  }
+
+  function toggleShowMoreNotes() {
+    if (maxNotesCardNumber === undefined) {
+      setMaxNotesCardNumber(maxCardNumber);
+    } else {
+      setMaxNotesCardNumber(undefined);
     }
   }
 
@@ -54,6 +67,7 @@ export default function Home() {
           <Tabs.Tab value="all">All</Tabs.Tab>
           <Tabs.Tab value="favorites">Favorites</Tabs.Tab>
           <Tabs.Tab value="todolists">Todolists</Tabs.Tab>
+          <Tabs.Tab value="notes">Notes</Tabs.Tab>
         </Tabs.List>
 
         <Tabs.Panel value="all">
@@ -67,6 +81,12 @@ export default function Home() {
           <Text p="md">
             <Anchor component="button" onClick={toggleShowMoreTodolists}>
               Show {maxTodolistsCardNumber ? "all" : "less"} todolists
+            </Anchor>
+          </Text>
+          <Notes maxCardNumber={maxNotesCardNumber} titleLink={true} />
+          <Text p="md">
+            <Anchor component="button" onClick={toggleShowMoreNotes}>
+              Show {maxNotesCardNumber ? "all" : "less"} notes
             </Anchor>
           </Text>
         </Tabs.Panel>
