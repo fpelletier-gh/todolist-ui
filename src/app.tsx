@@ -23,6 +23,7 @@ import SpotlightWrapper from "./routes/spotlightWrapper";
 import Profile from "./routes/profile";
 import Contact from "./routes/contact";
 import Home from "./routes/home";
+import Note from "./routes/note";
 import { useLocalStorage } from "@mantine/hooks";
 
 export const routes = [
@@ -64,6 +65,7 @@ export const routes = [
         ],
       },
       {
+        path: "/note",
         element: (
           <RequireAuth>
             <SpotlightWrapper>
@@ -73,7 +75,11 @@ export const routes = [
         ),
         children: [
           {
+            path: "/note/:noteId",
+            element: <Note />,
           },
+        ],
+      },
       {
         path: "/home/:tabValue",
         element: (
