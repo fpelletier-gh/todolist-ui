@@ -79,12 +79,14 @@ interface LinksGroupProps {
     TodolistPayloadSchema,
     unknown
   >;
+  newNote: UseMutateFunction<NoteSchema, unknown, NotePayloadSchema, unknown>;
   closeNavbar: () => void;
 }
 
 export default function LinksNewGroup({
   navigate,
   newTodolist,
+  newNote,
   closeNavbar,
 }: LinksGroupProps) {
   const { classes, theme } = useStyles();
@@ -94,6 +96,11 @@ export default function LinksNewGroup({
   function handleNewTodolistClick() {
     closeNavbar();
     openNewTodolistModal(navigate, newTodolist);
+  }
+
+  function handleNewNoteClick() {
+    closeNavbar();
+    openNewNoteModal(navigate, newNote);
   }
 
   return (
@@ -129,6 +136,9 @@ export default function LinksNewGroup({
           onClick={handleNewTodolistClick}
         >
           Todolist
+        </UnstyledButton>
+        <UnstyledButton className={classes.link} onClick={handleNewNoteClick}>
+          Note
         </UnstyledButton>
       </Collapse>
     </>
