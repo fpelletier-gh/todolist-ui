@@ -1,5 +1,7 @@
 import axios from "axios";
 import {
+  NotePayloadSchema,
+  NoteSchema,
   TodolistPayloadSchema,
   TodolistSchema,
   TodoPayload,
@@ -12,6 +14,7 @@ const base = import.meta.env.VITE_API_ENDPOINT;
 const userBase = `${base}/api/users`;
 const sessionBase = `${base}/api/sessions`;
 const todolistBase = `${base}/api/todolist`;
+const noteBase = `${base}/api/note`;
 
 axios.defaults.headers["Authorization"] = `Bearer ${localStorage.getItem(
   "access_token"
@@ -123,4 +126,37 @@ export async function getTodolists(): Promise<TodolistSchema[]> {
   return axios.get(todolistBase).then((res) => {
     return res.data;
   });
+}
+
+export async function getNote(noteId: string): Promise<NoteSchema> {
+  return axios.get(`${noteBase}/${noteId}`).then((res) => {
+    return res.data;
+  });
+}
+
+export async function getNotes(): Promise<NoteSchema[]> {
+  return axios.get(noteBase).then((res) => {
+    return res.data;
+  });
+}
+
+export async function createNote(payload: {
+  title: string;
+  content: string;
+}): Promise<NoteSchema> {
+  return axios.post(noteBase, payload).then((res) => res.data);
+}
+
+export function updateNote({
+  noteId,
+  payload,
+}: {
+  noteId: string;
+  payload: NotePayloadSchema;
+}) {
+  return axios.put<TodolistSchema>(`${noteBase}/${noteId}`, payload);
+}
+
+export async function deleteNote(noteId: string) {
+  return axios.delete(`${todolistBase}/${noteId}`).then((res) => res.data);
 }

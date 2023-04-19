@@ -2,18 +2,24 @@ import { showNotification } from "@mantine/notifications";
 import { IconX } from "@tabler/icons-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
+  createNote,
   createTodolist,
+  deleteNote,
   deleteTodo,
   deleteTodolist,
+  getNote,
+  getNotes,
   getTodolist,
   getTodolists,
   getUser,
   login,
+  updateNote,
   updateTodo,
   updateTodolist,
 } from "../api";
 import {
   LoginPayloadSchema,
+  NotePayloadSchema,
   TodolistPayloadSchema,
   TodolistSchema,
   TodoPayload,
@@ -69,11 +75,12 @@ export function useUserQuery() {
   return useQuery({
     queryKey: ["user"],
     queryFn: getUser,
+    cacheTime: Infinity,
     staleTime: Infinity,
   });
 }
 
-export function useEditTodolist() {
+export function useUpdateTodolist() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({
@@ -85,6 +92,7 @@ export function useEditTodolist() {
     }) => updateTodolist({ todolistId, payload }),
     onSuccess: () => {
       queryClient.invalidateQueries(["todolist"]);
+      queryClient.invalidateQueries(["todolists"]);
     },
   });
 }
@@ -189,6 +197,57 @@ export function useNewTodolist() {
     },
   });
   return { newTodolist: mutate };
+}
+
+export function useNotes() {
+  return useQuery({
+    queryKey: ["notes"],
+    queryFn: getNotes,
+    keepPreviousData: true,
+  });
+}
+
+export function useNote(noteId: string) {
+  return useQuery({
+    queryKey: ["note", noteId],
+    queryFn: () => getNote(noteId),
+    keepPreviousData: true,
+  });
+}
+
+export function useNewNote() {
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: ({ title, content }: NotePayloadSchema) =>
+      createNote({ title, content }),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["notes"]);
+    },
+  });
+  return { newNote: mutate };
+}
+
+export function useUpdateNote() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      noteId,
+      payload,
+    }: {
+      noteId: string;
+      payload: NotePayloadSchema;
+    }) => updateNote({ noteId, payload }),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["note"]);
+      queryClient.invalidateQueries(["notes"]);
+    },
+  });
+}
+
+export function useDeleteNote() {
+  return useMutation({
+    mutationFn: (noteId: string) => deleteNote(noteId),
+  });
 }
 
 export function useFavorites() {
