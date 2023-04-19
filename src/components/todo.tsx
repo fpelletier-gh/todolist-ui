@@ -38,6 +38,12 @@ export default function Todo({
         sx={{ lineHeight: 1 }}
         radius="sm"
         onChange={handleCheckboxChange}
+        styles={(theme) => ({
+          label: {
+            textDecoration: todo.complete ? "line-through" : "none",
+            color: todo.complete ? theme.colors.dark[3] : "inherit",
+          },
+        })}
       />
       <TodoMenu
         isVisible={isVisible}
