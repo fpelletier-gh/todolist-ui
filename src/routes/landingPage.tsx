@@ -197,7 +197,7 @@ export default function LandingPage() {
           <div className={classes.controls}>
             <Button
               component={Link}
-              to="/todolist"
+              to="/home/all"
               className={classes.control}
               size="lg"
             >
