@@ -1,6 +1,8 @@
 import Root from "./routes/root";
 import ErrorPage from "./error-page";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
+import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
+import { QueryClient } from "@tanstack/react-query";
 import {
   ColorScheme,
   ColorSchemeProvider,
@@ -115,7 +117,17 @@ export const routes = [
 const router = createBrowserRouter(routes);
 
 function App() {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        cacheTime: 1000 * 60 * 60 * 24, // 24 hours
+      },
+    },
+  });
+
+  const persister = createSyncStoragePersister({
+    storage: window.localStorage,
+  });
 
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: "mantine-color-scheme",
@@ -127,7 +139,10 @@ function App() {
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <PersistQueryClientProvider
+      client={queryClient}
+      persistOptions={{ persister }}
+    >
       <ColorSchemeProvider
         colorScheme={colorScheme}
         toggleColorScheme={toggleColorScheme}
@@ -152,7 +167,7 @@ function App() {
           </NotificationsProvider>
         </MantineProvider>
       </ColorSchemeProvider>
-    </QueryClientProvider>
+    </PersistQueryClientProvider>
   );
 }
 
