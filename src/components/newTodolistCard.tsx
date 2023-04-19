@@ -1,80 +1,15 @@
-import {
-  Text,
-  Card,
-  Anchor,
-  Title,
-  Stack,
-  Textarea,
-  TextInput,
-} from "@mantine/core";
-import { useFocusTrap } from "@mantine/hooks";
-import { closeAllModals, openModal } from "@mantine/modals";
-import { showNotification } from "@mantine/notifications";
-import { useForm } from "react-hook-form";
+import { Text, Card, Anchor, Title, ThemeIcon } from "@mantine/core";
 import { IconPencilPlus } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { useNewTodolist } from "../hooks";
-import { TodolistPayloadSchema } from "../types";
-import SubmitButtonGroup from "./submitButtonGroup";
+import { openNewTodolistModal } from "./newTodolistForm";
 
 export default function NewTodolistCard() {
   const navigate = useNavigate();
   const { newTodolist } = useNewTodolist();
-  const focusTrapRef = useFocusTrap();
-
-  function NewTodolistForm() {
-    const { register, handleSubmit, reset } = useForm({
-      defaultValues: {
-        title: "",
-        description: "",
-      },
-    });
-
-    function onSubmit(payload: TodolistPayloadSchema) {
-      newTodolist(payload, {
-        onSuccess: (data) => {
-          () => reset();
-          navigate(`/todolist/${data.todolistId}`);
-        },
-        onError: () => {
-          showNotification({
-            id: "new-todolist",
-            title: "Error",
-            message: "Todolist has not been created",
-            color: "red",
-            icon: <IconX />,
-          });
-        },
-      });
-      closeAllModals();
-    }
-
-    return (
-      <form onSubmit={handleSubmit(onSubmit)} ref={focusTrapRef}>
-        <Stack>
-          <TextInput
-            label="Title"
-            placeholder="Title"
-            data-autofocus
-            {...register("title")}
-          />
-          <Textarea
-            label="Description"
-            placeholder="Description"
-            autosize
-            {...register("description")}
-          />
-          <SubmitButtonGroup />
-        </Stack>
-      </form>
-    );
-  }
 
   function handleNewTodolistClick() {
-    openModal({
-      title: "New todolist",
-      children: <NewTodolistForm />,
-    });
+    openNewTodolistModal(navigate, newTodolist);
   }
 
   return (
@@ -86,6 +21,27 @@ export default function NewTodolistCard() {
     >
       <Card
         shadow="sm"
+        sx={(theme) => ({
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: theme.spacing.md,
+          backgroundColor:
+            theme.colorScheme === "dark"
+              ? theme.colors.dark[7]
+              : theme.colors.gray[2],
+          "&:hover": {
+            backgroundColor:
+              theme.colorScheme === "dark"
+                ? theme.colors.dark[8]
+                : theme.colors.gray[3],
+            borderColor:
+              theme.colorScheme === "dark"
+                ? theme.colors.blue[6]
+                : theme.colors.blue[3],
+          },
+        })}
         maw="400px"
         mih="160px"
         mah="160px"
@@ -93,14 +49,21 @@ export default function NewTodolistCard() {
         radius="md"
         withBorder
       >
-        <Card.Section withBorder ta="left" inheritPadding py="xs">
-          <Title order={3} mb="sm" size="lg">
-            New +
-          </Title>
-          <Text size="sm" color="dimmed">
-            Add a new todolist
-          </Text>
-        </Card.Section>
+        <ThemeIcon
+          sx={(theme) => ({
+            backgroundColor: "transparent",
+
+            color:
+              theme.colorScheme === "dark"
+                ? theme.colors.white
+                : theme.colors.dark[8],
+          })}
+        >
+          <IconPencilPlus />
+        </ThemeIcon>
+        <Text size="sm" color="dimmed">
+          Add a new todolist
+        </Text>
       </Card>
     </Anchor>
   );
