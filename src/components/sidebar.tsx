@@ -2,13 +2,17 @@ import { Text } from "@mantine/core";
 import {
   IconHome,
   IconListDetails,
+  IconNotes,
   IconStar,
 } from "@tabler/icons-react";
 import {
   useNewTodolist,
+  useNewNote,
+  useNotes,
   useTodolists,
   useFavorites,
 } from "../hooks";
+import { NoteSchema, TodolistSchema } from "../types";
 import LinksGroup from "./linksGroup";
 import LinkNav from "./linkNav";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +21,9 @@ import LinksNewGroup from "./linksNewGroup";
 export default function Sidebar({ closeNavbar }: { closeNavbar: () => void }) {
   const navigate = useNavigate();
   const { newTodolist } = useNewTodolist();
+  const { newNote } = useNewNote();
   const todolists = useTodolists();
+  const notes = useNotes();
   const { favorites } = useFavorites();
 
   if (todolists.error instanceof Error) {
@@ -51,6 +57,14 @@ export default function Sidebar({ closeNavbar }: { closeNavbar: () => void }) {
       };
     });
 
+  const notesLinks =
+    notes.data &&
+    notes.data.map((note: NoteSchema) => {
+      return {
+        label: note.title,
+        link: `/note/${note.noteId}`,
+        id: note.noteId,
+      };
     });
 
   return (
@@ -59,6 +73,12 @@ export default function Sidebar({ closeNavbar }: { closeNavbar: () => void }) {
         label="Home"
         icon={IconHome}
         link="/home/all"
+        closeNavbar={closeNavbar}
+      />
+      <LinksNewGroup
+        navigate={navigate}
+        newTodolist={newTodolist}
+        newNote={newNote}
         closeNavbar={closeNavbar}
       />
       <LinksGroup
@@ -71,6 +91,12 @@ export default function Sidebar({ closeNavbar }: { closeNavbar: () => void }) {
         label="Todolists"
         icon={IconListDetails}
         links={todolistsLinks}
+        closeNavbar={closeNavbar}
+      />
+      <LinksGroup
+        label="Notes"
+        icon={IconNotes}
+        links={notesLinks}
         closeNavbar={closeNavbar}
       />
     </>
