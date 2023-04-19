@@ -7,14 +7,11 @@ import {
   IconSearch,
 } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
-import { useNewTodolist, useTodolists } from "../hooks";
-import { TodolistPayloadSchema, TodolistSchema } from "../types";
+import { useNewNote, useNewTodolist, useNotes, useTodolists } from "../hooks";
+import { NoteSchema, TodolistSchema } from "../types";
 import type { SpotlightAction } from "@mantine/spotlight";
-import { useForm } from "react-hook-form";
-import { showNotification } from "@mantine/notifications";
-import { closeAllModals, openModal } from "@mantine/modals";
-import { Button, Group, Stack, Textarea, TextInput } from "@mantine/core";
-import { useFocusTrap } from "@mantine/hooks";
+import { openNewTodolistModal } from "../components/newTodolistForm";
+import { openNewNoteModal } from "../components/newNoteForm";
 
 export default function SpotlightWrapper({
   children,
@@ -22,84 +19,37 @@ export default function SpotlightWrapper({
   children: React.ReactNode;
 }) {
   const todolists = useTodolists();
+  const notes = useNotes();
   const navigate = useNavigate();
   const { newTodolist } = useNewTodolist();
-  const focusTrapRef = useFocusTrap();
+  const { newNote } = useNewNote();
 
-  function NewTodolistForm() {
-    const { register, handleSubmit, reset } = useForm({
-      defaultValues: {
-        title: "",
-        description: "",
-      },
-    });
+  const sortedNotesAndTodolists = [
+    ...(todolists?.data || []),
+    ...(notes?.data || []),
+  ].sort((a, b) => {
+    return b.updatedAt.localeCompare(a.updatedAt);
+  });
 
-    function onSubmit(payload: TodolistPayloadSchema) {
-      newTodolist(payload, {
-        onSuccess: (data) => {
-          () => reset();
-          navigate(`/todolist/${data.todolistId}`);
-        },
-        onError: () => {
-          showNotification({
-            id: "new-todolist",
-            title: "Error",
-            message: "Todolist has not been created",
-            color: "red",
-            icon: <IconX />,
-          });
-        },
-      });
-      closeAllModals();
-    }
-
-    return (
-      <form onSubmit={handleSubmit(onSubmit)} ref={focusTrapRef}>
-        <Stack>
-          <TextInput
-            label="Title"
-            placeholder="Title"
-            data-autofocus
-            {...register("title")}
-          />
-          <Textarea
-            label="Description"
-            placeholder="Description"
-            autosize
-            {...register("description")}
-          />
-          <Group>
-            <Button type="submit">Save</Button>
-            <Button
-              variant="subtle"
-              onClick={() => closeAllModals()}
-              type="button"
-            >
-              cancel
-            </Button>
-          </Group>
-        </Stack>
-      </form>
-    );
-  }
-
-  function handleNewTodolistClick() {
-    openModal({
-      title: "New todolist",
-      children: <NewTodolistForm />,
-    });
-  }
-
-  const todolistActions: SpotlightAction[] =
-    todolists.data?.map((todolist: TodolistSchema) => {
-      const keywords = todolist.todos.map((todo) => todo.title.toLowerCase());
+  const todolistsAndNotesActions: SpotlightAction[] =
+    sortedNotesAndTodolists.map((item: TodolistSchema | NoteSchema) => {
+      if ("todolistId" in item) {
+        const keywords = item.todos.map((todo) => todo.title.toLowerCase());
+        return {
+          title: item.title,
+          description: item.description,
+          onTrigger: () => navigate(`/todolist/${item.todolistId}`),
+          icon: <IconCheckbox size={18} />,
+          group: "search",
+          keywords: keywords,
+        };
+      }
       return {
-        title: todolist.title,
-        description: todolist.description,
-        onTrigger: () => navigate(`/todolist/${todolist.todolistId}`),
+        title: item.title,
+        description: item.content,
+        onTrigger: () => navigate(`/todolist/${item.noteId}`),
         icon: <IconCheckbox size={18} />,
         group: "search",
-        keywords: keywords,
       };
     }) || [];
 
@@ -107,18 +57,25 @@ export default function SpotlightWrapper({
     {
       title: "Home",
       description: "Get to the todolists page",
-      onTrigger: () => navigate(`/todolist`),
+      onTrigger: () => navigate(`/home/all`),
       icon: <IconHome size={18} />,
       group: "main",
     },
     {
-      title: "New Todolist",
-      description: "Create a new Todolist",
-      onTrigger: () => handleNewTodolistClick(),
-      icon: <IconDashboard size={18} />,
+      title: "New todolist",
+      description: "Create a new todolist",
+      onTrigger: () => openNewTodolistModal(navigate, newTodolist),
+      icon: <IconChecklist size={18} />,
       group: "main",
     },
-    ...todolistActions,
+    {
+      title: "New note",
+      description: "Create a new note",
+      onTrigger: () => openNewNoteModal(navigate, newNote),
+      icon: <IconArticle size={18} />,
+      group: "main",
+    },
+    ...todolistsAndNotesActions,
   ];
 
   return (
