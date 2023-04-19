@@ -2,7 +2,6 @@ import {
   Text,
   Flex,
   Title,
-  Loader,
   Button,
   Input,
   Card,
@@ -22,6 +21,7 @@ import { TodoSchema } from "../types";
 import { useTodolist } from "../hooks";
 import { IconX } from "@tabler/icons-react";
 import TodolistMenu from "../components/todolistMenu";
+import StyledLoader from "../components/styledLoader";
 
 export default function Todolist() {
   const params = useParams();
@@ -41,7 +41,7 @@ export default function Todolist() {
   // TODO: refactor createTodoMutation to hook
   const createTodoMutation = useMutation(createTodo, {
     onMutate: () => {
-      return <Loader />;
+      return <StyledLoader />;
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["todolists"]);
@@ -84,12 +84,22 @@ export default function Todolist() {
     return (
       <>
         <Card shadow="sm" maw="400px" mih="160px" p="lg" radius="md" withBorder>
-          <Card.Section withBorder inheritPadding py="xs">
+          <Card.Section
+            withBorder
+            inheritPadding
+            py="xs"
+            sx={(theme) => ({
+              backgroundColor:
+                theme.colorScheme === "dark"
+                  ? theme.colors.dark[7]
+                  : theme.colors.gray[2],
+            })}
+          >
             <Group position="apart" noWrap>
               <Title order={2}>{todolist.data?.title}</Title>
               <TodolistMenu
                 todolistId={params.todolistId}
-                navigatePath="/todolist"
+                navigatePath="/home/todolists"
               />
             </Group>
             <Text size="sm" sx={{ whiteSpace: "pre-line" }} color="dimmed">
@@ -155,7 +165,7 @@ export default function Todolist() {
           </Flex>
         </Card>
         <Box mt="lg">
-          <Anchor component={Link} underline={false} to="/todolist">
+          <Anchor component={Link} underline={false} to="/home/todolists">
             Back to todolists
           </Anchor>
         </Box>
@@ -164,7 +174,7 @@ export default function Todolist() {
   }
 
   if (todolist.isFetching) {
-    return <Loader />;
+    return <StyledLoader />;
   }
 
   if (todolist.error instanceof Error) {
