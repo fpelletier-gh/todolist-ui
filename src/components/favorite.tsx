@@ -61,3 +61,34 @@ export function FavoriteTodolist({ todolist }: { todolist: TodolistSchema }) {
     </Box>
   );
 }
+
+export function FavoriteNote({ note }: { note: NoteSchema }) {
+  const { mutate } = useUpdateNote();
+  const { classes } = useStyles();
+
+  const handleFavoriteClick = (e: any) => {
+    e.preventDefault();
+    mutate({
+      noteId: note.noteId,
+      payload: {
+        title: note.title,
+        content: note.content,
+        favorite: !note.favorite,
+      },
+    });
+  };
+
+  return (
+    <Box
+      component="button"
+      className={classes.button}
+      onClick={handleFavoriteClick}
+    >
+      {note.favorite ? (
+        <IconStarFilled className={classes.icon} />
+      ) : (
+        <IconStar className={classes.icon} />
+      )}
+    </Box>
+  );
+}
