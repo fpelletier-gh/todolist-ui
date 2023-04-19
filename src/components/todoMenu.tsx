@@ -93,7 +93,7 @@ export default function TodoMenu({
   }
 
   return (
-    <Menu shadow="md" width={200}>
+    <Menu shadow="md" offset={-1} withArrow>
       <Menu.Target>
         <ActionIcon
           sx={{
@@ -105,7 +105,14 @@ export default function TodoMenu({
         </ActionIcon>
       </Menu.Target>
 
-      <Menu.Dropdown>
+      <Menu.Dropdown
+        sx={(theme) => ({
+          backgroundColor:
+            theme.colorScheme === "dark"
+              ? theme.colors.dark[7]
+              : theme.colors.gray[2],
+        })}
+      >
         <Menu.Item onClick={openEditModal} icon={<IconEdit size={14} />}>
           Edit
         </Menu.Item>
