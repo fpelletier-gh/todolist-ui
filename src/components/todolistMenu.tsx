@@ -1,6 +1,5 @@
 import {
   ActionIcon,
-  Button,
   Group,
   Menu,
   Stack,
@@ -12,11 +11,12 @@ import { showNotification } from "@mantine/notifications";
 import { IconDots, IconEdit, IconTrash, IconX } from "@tabler/icons-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { useDeleteTodolist, useEditTodolist, useTodolist } from "../hooks";
+import { useDeleteTodolist, useUpdateTodolist, useTodolist } from "../hooks";
 import { closeAllModals, openConfirmModal, openModal } from "@mantine/modals";
 import { useForm } from "react-hook-form";
 import { TodolistPayloadSchema } from "../types";
 import SubmitButtonGroup from "./submitButtonGroup";
+import { FavoriteTodolist } from "./favorite";
 
 export default function TodolistMenu({
   todolistId,
@@ -30,7 +30,7 @@ export default function TodolistMenu({
   const queryClient = useQueryClient();
   const todolist = useTodolist(todolistId);
   const deleteTodolist = useDeleteTodolist();
-  const editTodolist = useEditTodolist();
+  const editTodolist = useUpdateTodolist();
   const navigate = useNavigate();
 
   function handleDeleteTodolist() {
@@ -115,6 +115,7 @@ export default function TodolistMenu({
           <Textarea
             label="Description"
             placeholder="Description"
+            minRows={3}
             autosize
             {...register("description")}
           />
@@ -125,43 +126,53 @@ export default function TodolistMenu({
   }
 
   return (
-    <Menu shadow="md" width={200} zIndex="10">
-      <Menu.Target>
-        <ActionIcon
-          component="button"
-          onClick={(e) => {
-            e.preventDefault();
-          }}
-          sx={{
-            visibility: isVisible ? "visible" : "hidden",
-          }}
-          variant="transparent"
-        >
-          <IconDots size={16} />
-        </ActionIcon>
-      </Menu.Target>
+    <Group spacing="xs" noWrap>
+      {todolist.data && <FavoriteTodolist todolist={todolist.data} />}
+      <Menu shadow="md" offset={-1} zIndex="10" withArrow>
+        <Menu.Target>
+          <ActionIcon
+            component="button"
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+            sx={{
+              visibility: isVisible ? "visible" : "hidden",
+            }}
+            variant="transparent"
+          >
+            <IconDots size={16} />
+          </ActionIcon>
+        </Menu.Target>
 
-      <Menu.Dropdown>
-        <Menu.Item
-          onClick={(e) => {
-            e.preventDefault();
-            openEditModal();
-          }}
-          icon={<IconEdit size={14} />}
+        <Menu.Dropdown
+          sx={(theme) => ({
+            backgroundColor:
+              theme.colorScheme === "dark"
+                ? theme.colors.dark[7]
+                : theme.colors.gray[3],
+          })}
         >
-          Edit
-        </Menu.Item>
-        <Menu.Item
-          onClick={(e) => {
-            e.preventDefault();
-            openDeleteModal();
-          }}
-          color="red"
-          icon={<IconTrash size={14} />}
-        >
-          Delete
-        </Menu.Item>
-      </Menu.Dropdown>
-    </Menu>
+          <Menu.Item
+            onClick={(e) => {
+              e.preventDefault();
+              openEditModal();
+            }}
+            icon={<IconEdit size={14} />}
+          >
+            Edit
+          </Menu.Item>
+          <Menu.Item
+            onClick={(e) => {
+              e.preventDefault();
+              openDeleteModal();
+            }}
+            color="red"
+            icon={<IconTrash size={14} />}
+          >
+            Delete
+          </Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    </Group>
   );
 }
