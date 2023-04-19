@@ -63,6 +63,13 @@ export default function Header() {
                   Home
                 </Menu.Item>
                 <Menu.Item
+                  icon={<IconStar size={14} />}
+                  component={Link}
+                  to="/home/favorites"
+                >
+                  Favorites
+                </Menu.Item>
+                <Menu.Item
                   icon={<IconUserCircle size={14} />}
                   component={Link}
                   to="/user/profile"
