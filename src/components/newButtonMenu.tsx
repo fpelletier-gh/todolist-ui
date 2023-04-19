@@ -1,10 +1,13 @@
 import { createStyles, Menu, UnstyledButton, ThemeIcon } from "@mantine/core";
 import {
   IconListDetails,
+  IconNotes,
   IconPencilPlus,
 } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
+import { useNewTodolist, useNewNote } from "../hooks";
 import { openNewTodolistModal } from "./newTodolistForm";
+import { openNewNoteModal } from "./newNoteForm";
 
 const useStyles = createStyles((theme) => ({
   button: {
@@ -26,6 +29,7 @@ const useStyles = createStyles((theme) => ({
 export default function NewTodolistButton() {
   const navigate = useNavigate();
   const { newTodolist } = useNewTodolist();
+  const { newNote } = useNewNote();
   const { classes } = useStyles();
 
   return (
@@ -52,6 +56,12 @@ export default function NewTodolistButton() {
           icon={<IconListDetails size={14} />}
         >
           Todolist
+        </Menu.Item>
+        <Menu.Item
+          onClick={() => openNewNoteModal(navigate, newNote)}
+          icon={<IconNotes size={14} />}
+        >
+          Note
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>
