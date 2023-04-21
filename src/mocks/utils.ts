@@ -25,6 +25,7 @@ export const todolistWithTodos: TodolistSchema = {
   description: "A list about the first todolist",
   valid: true,
   todolistId: "todolist_9b425417-86f6-4f4f-8c8c-ecf15d00574b",
+  favorite: false,
   todos: [
     {
       title: "Todo one",
@@ -56,6 +57,7 @@ export const todolists: TodolistSchema[] = [
     description: "A list about todolist two",
     valid: true,
     todolistId: "todolist_e9d77f60-df99-4f70-9059-f41183b64a10",
+    favorite: false,
     todos: [
       {
         title: "Todo one from todolist two",
@@ -85,6 +87,7 @@ export const todolists: TodolistSchema[] = [
     description: "A list about the first todolist",
     valid: true,
     todolistId: "todolist_9b425417-86f6-4f4f-8c8c-ecf15d00574b",
+    favorite: false,
     todos: [
       {
         title: "Todo one from todolist one",
