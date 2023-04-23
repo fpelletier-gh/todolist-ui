@@ -9,16 +9,23 @@ import {
   Title,
   createStyles,
   Anchor,
+  Loader,
+  /* Loader, */
 } from "@mantine/core";
-import { useQueryClient } from "@tanstack/react-query";
+/* import { useQueryClient } from "@tanstack/react-query"; */
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ColorSchemeToggleButton from "../../components/colorSchemeToggleButton";
-import StyledLoader from "../../components/styledLoader";
+/* import StyledLoader from "../../components/styledLoader"; */
 import { useUser } from "../../context/user";
-import { useLogin, useUserQuery } from "../../hooks";
+import { login } from "../../api";
+/* import { useLogin, useUserQuery } from "../../hooks"; */
 import { LoginPayloadSchema } from "../../types";
 import { Dots } from "../dots";
+import { useQueryClient } from "@tanstack/react-query";
+import { showNotification } from "@mantine/notifications";
+import { IconX } from "@tabler/icons-react";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -132,46 +139,55 @@ const useStyles = createStyles((theme) => ({
 
 export default function LoginPage() {
   const user = useUser();
-  const { register, handleSubmit, reset } = useForm({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { isSubmitting },
+  } = useForm({
     defaultValues: {
       email: "",
       password: "",
     },
   });
-  const userQuery = useUserQuery();
-  const { login } = useLogin();
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { classes } = useStyles();
-  const lastLocation = localStorage.getItem("last_location");
+
+  useEffect(() => {
+    if (user.user) {
+      navigate("/home/all");
+    }
+  }, [user.user]);
 
   function handleCancelClick(): void {
     reset();
     navigate("/");
   }
 
-  const onSubmit = (payload: LoginPayloadSchema): void => {
-    login(payload, {
-      onSuccess: (data) => {
-        queryClient.setQueryData(["user"], data.user);
-        queryClient.invalidateQueries(["user"]);
-        user.login(data.user);
-        reset();
-      },
-      onSettled: () => {
-        navigate("/");
-      },
-    });
+  const onSubmit = (payload: LoginPayloadSchema) => {
+    (async () => {
+      try {
+        const credential = await login(payload);
+        queryClient.invalidateQueries();
+        user.login(credential.user);
+      } catch (e: any) {
+        console.log(e);
+        showNotification({
+          id: "login",
+          title: "Error",
+          message:
+            e.response.status === 401
+              ? "Invalid email or password"
+              : "Could not logged in",
+          color: "red",
+          icon: <IconX />,
+        });
+      }
+    })();
+    reset();
   };
-
-  if (userQuery.data) {
-    return <Navigate to={lastLocation ? lastLocation : "/home/all"} />;
-  }
-
-  if (userQuery.isFetching) {
-    return <StyledLoader />;
-  }
 
   return (
     <Container className={classes.wrapper} size={1400}>
@@ -200,20 +216,28 @@ export default function LoginPage() {
               <TextInput
                 label="Email"
                 placeholder="jane@example.com"
+                disabled={isSubmitting}
                 required
                 {...register("email")}
               />
               <PasswordInput
                 label="Password"
                 placeholder="Your strong password"
+                disabled={isSubmitting}
                 required
                 {...register("password")}
               />
               <Group>
-                <Button px="lg" variant="gradient" type="submit">
-                  Login
+                <Button
+                  disabled={isSubmitting}
+                  px="lg"
+                  variant="gradient"
+                  type="submit"
+                >
+                  {isSubmitting ? <Loader /> : "Login"}
                 </Button>
                 <Button
+                  disabled={isSubmitting}
                   variant="subtle"
                   onClick={() => handleCancelClick()}
                   type="button"

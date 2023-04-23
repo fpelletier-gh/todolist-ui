@@ -1,13 +1,12 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useUserQuery } from "../hooks";
+import { useUser } from "../context/user";
 
 export default function RequireAuth({ children }: { children: JSX.Element }) {
-  const userQuery = useUserQuery();
   const location = useLocation();
-  const user = userQuery.data;
+  const user = useUser();
 
   if (!user) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <Navigate to="/" state={{ from: location }} replace />;
   }
 
   return children;

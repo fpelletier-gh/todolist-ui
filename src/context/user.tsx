@@ -1,15 +1,6 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import { UserSchema } from "../types";
-import { useUserQuery } from "../hooks";
-import StyledLoader from "../components/styledLoader";
 import { useQueryClient } from "@tanstack/react-query";
-import { logout as logoutApi } from "../api/index";
 
 const UserContext = createContext<{
   user: UserSchema | undefined;
@@ -24,20 +15,12 @@ const UserContext = createContext<{
 function UserContextProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserSchema | undefined>(undefined);
   const queryClient = useQueryClient();
-  const userQuery = useUserQuery();
-
-  useEffect(() => {
-    if (userQuery.data) {
-      setUser(userQuery.data);
-    }
-  }, [userQuery.data]);
 
   function login(newUser: UserSchema) {
     setUser(newUser);
   }
 
   function logout() {
-    logoutApi();
     setUser(undefined);
     queryClient.clear();
     localStorage.setItem("access_token", "");
@@ -47,7 +30,7 @@ function UserContextProvider({ children }: { children: ReactNode }) {
 
   return (
     <UserContext.Provider value={{ user: user, login: login, logout: logout }}>
-      {userQuery.isLoading ? <StyledLoader /> : children}
+      {children}
     </UserContext.Provider>
   );
 }

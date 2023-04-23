@@ -12,39 +12,16 @@ import {
   getTodolist,
   getTodolists,
   getUser,
-  login,
   updateNote,
   updateTodo,
   updateTodolist,
 } from "../api";
 import {
-  LoginPayloadSchema,
   NotePayloadSchema,
   TodolistPayloadSchema,
   TodolistSchema,
   TodoPayload,
 } from "../types";
-
-export function useLogin() {
-  const queryClient = useQueryClient();
-  const { mutate } = useMutation({
-    mutationFn: ({ email, password }: LoginPayloadSchema) =>
-      login({ email, password }),
-    onSuccess: () => {
-      /* queryClient.invalidateQueries(["user"]); */
-    },
-    onError: () => {
-      showNotification({
-        id: "login",
-        title: "Error",
-        message: "Could not login",
-        color: "red",
-        icon: <IconX />,
-      });
-    },
-  });
-  return { login: mutate };
-}
 
 export function useTodolists() {
   return useQuery({
