@@ -5,7 +5,7 @@ An application Designed to help you get organized, achieve your goals and never 
 
 Built with typescript, react, vite.js, vitest, react-testing-library, mantine-ui, react-query, react-router, react-hook-form and msw.
 
-The REST api repository: [rest-api-todolist](https://https://github.com/fpelletier-gh/rest-api-todolist)
+The REST api repository: [rest-api-todolist](https://github.com/fpelletier-gh/rest-api-todolist)
 
 ## Table of Contents
 
