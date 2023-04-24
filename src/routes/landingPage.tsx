@@ -159,13 +159,14 @@ export default function LandingPage() {
           >
             to do lists
           </Text>{" "}
-          application to manage your lists
+          application for all your productivity needs
         </Title>
 
         <Container p={0} size={600}>
           <Text size="lg" color="dimmed" className={classes.description}>
             Designed to help you get organized, achieve your goals and never
-            forget a thing, todolists will help you stay ahead in your tasks.
+            forget a thing, todolists will help you stay ahead in your lists and
+            notes.
           </Text>
         </Container>
 
