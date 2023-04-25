@@ -1,6 +1,13 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { UserSchema } from "../types";
 import { useQueryClient } from "@tanstack/react-query";
+import { getUser } from "../api";
 
 const UserContext = createContext<{
   user: UserSchema | undefined;
@@ -15,6 +22,16 @@ const UserContext = createContext<{
 function UserContextProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserSchema | undefined>(undefined);
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    try {
+      async function getUserData() {
+        const user = await getUser();
+        setUser(user);
+      }
+      getUserData();
+    } catch (e) {}
+  }, []);
 
   function login(newUser: UserSchema) {
     setUser(newUser);

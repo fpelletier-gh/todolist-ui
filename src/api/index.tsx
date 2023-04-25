@@ -16,6 +16,12 @@ const sessionBase = `${base}/api/sessions`;
 const todolistBase = `${base}/api/todolist`;
 const noteBase = `${base}/api/note`;
 
+const authToken = `Bearer ${localStorage.getItem("access_token")}`;
+const refreshToken = localStorage.getItem("refresh_token");
+
+axios.defaults.headers.common["Authorization"] = authToken;
+axios.defaults.headers.common["x-refresh"] = refreshToken;
+
 export async function registerUser(payload: {
   username: string;
   password: string;
@@ -29,12 +35,8 @@ export async function login(payload: { email: string; password: string }) {
   return axios.post(sessionBase, payload).then((res) => {
     localStorage.setItem("access_token", res.data.accessToken);
     localStorage.setItem("refresh_token", res.data.refreshToken);
-    axios.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${localStorage.getItem("access_token")}`;
-
-    axios.defaults.headers.common["x-refresh"] =
-      localStorage.getItem("refresh_token");
+    axios.defaults.headers.common["Authorization"] = authToken;
+    axios.defaults.headers.common["x-refresh"] = refreshToken;
     return res.data;
   });
 }
