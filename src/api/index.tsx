@@ -160,5 +160,5 @@ export function updateNote({
 }
 
 export async function deleteNote(noteId: string) {
-  return axios.delete(`${todolistBase}/${noteId}`).then((res) => res.data);
+  return axios.delete(`${noteBase}/${noteId}`).then((res) => res.data);
 }
