@@ -97,10 +97,7 @@ export default function Todolist() {
           >
             <Group position="apart" noWrap>
               <Title order={2}>{todolist.data?.title}</Title>
-              <TodolistMenu
-                todolistId={params.todolistId}
-                navigatePath="/home/todolists"
-              />
+              <TodolistMenu todolistId={params.todolistId} />
             </Group>
             <Text size="sm" sx={{ whiteSpace: "pre-line" }} color="dimmed">
               {todolist.data?.description}

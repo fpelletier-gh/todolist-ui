@@ -70,10 +70,7 @@ export default function TodolistCard({
             <Title truncate={true} order={3} size="lg">
               {todolist.title}
             </Title>
-            <TodolistMenu
-              todolistId={todolist.todolistId}
-              navigatePath="/todolist"
-            />
+            <TodolistMenu todolistId={todolist.todolistId} />
           </Group>
           <Text
             truncate={true}

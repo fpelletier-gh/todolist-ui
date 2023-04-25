@@ -39,7 +39,7 @@ export default function Note() {
           >
             <Group position="apart" noWrap>
               <Title order={2}>{note.data?.title}</Title>
-              <NoteMenu noteId={params.noteId} navigatePath="/home/notes" />
+              <NoteMenu noteId={params.noteId} />
             </Group>
           </Card.Section>
           <Text

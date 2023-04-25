@@ -67,7 +67,7 @@ export default function NoteCard({ note }: { note: NoteSchema }) {
             <Title truncate={true} order={3} size="lg">
               {note.title}
             </Title>
-            <NoteMenu noteId={note.noteId} navigatePath="/note" />
+            <NoteMenu noteId={note.noteId} />
           </Group>
         </Card.Section>
         <Text

@@ -10,7 +10,7 @@ import {
 import { showNotification } from "@mantine/notifications";
 import { IconDots, IconEdit, IconTrash, IconX } from "@tabler/icons-react";
 import { useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDeleteNote, useUpdateNote, useNote } from "../hooks";
 import { closeAllModals, openConfirmModal, openModal } from "@mantine/modals";
 import { useForm } from "react-hook-form";
@@ -20,11 +20,9 @@ import { FavoriteNote } from "./favorite";
 
 export default function NoteMenu({
   noteId,
-  navigatePath = undefined,
   isVisible = true,
 }: {
   noteId: string;
-  navigatePath?: string | undefined;
   isVisible?: boolean;
 }) {
   const queryClient = useQueryClient();
@@ -32,13 +30,14 @@ export default function NoteMenu({
   const deleteNote = useDeleteNote();
   const editNote = useUpdateNote();
   const navigate = useNavigate();
+  const location = useLocation();
 
   function handleDeleteNote() {
     deleteNote.mutate(noteId, {
       onSuccess: () => {
         queryClient.invalidateQueries(["notes"]);
-        if (navigatePath) {
-          navigate(navigatePath);
+        if (location.pathname.includes("note_")) {
+          navigate("/home/notes");
         }
         showNotification({
           id: "delete-note",

@@ -10,7 +10,7 @@ import {
 import { showNotification } from "@mantine/notifications";
 import { IconDots, IconEdit, IconTrash, IconX } from "@tabler/icons-react";
 import { useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDeleteTodolist, useUpdateTodolist, useTodolist } from "../hooks";
 import { closeAllModals, openConfirmModal, openModal } from "@mantine/modals";
 import { useForm } from "react-hook-form";
@@ -20,11 +20,9 @@ import { FavoriteTodolist } from "./favorite";
 
 export default function TodolistMenu({
   todolistId,
-  navigatePath = undefined,
   isVisible = true,
 }: {
   todolistId: string;
-  navigatePath?: string | undefined;
   isVisible?: boolean;
 }) {
   const queryClient = useQueryClient();
@@ -32,13 +30,14 @@ export default function TodolistMenu({
   const deleteTodolist = useDeleteTodolist();
   const editTodolist = useUpdateTodolist();
   const navigate = useNavigate();
+  const location = useLocation();
 
   function handleDeleteTodolist() {
     deleteTodolist.mutate(todolistId, {
       onSuccess: () => {
         queryClient.invalidateQueries(["todolists"]);
-        if (navigatePath) {
-          navigate(navigatePath);
+        if (location.pathname.includes("todolist_")) {
+          navigate("/home/todolists");
         }
         showNotification({
           id: "delete-todolist",
