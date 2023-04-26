@@ -2,6 +2,7 @@ import { Text, Container, Anchor, Tabs } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useFavorites, useNotes, useTodolists } from "../hooks";
 import Favorites from "./favorites";
 import Notes from "./notes";
 import Todolists from "./todolists";
@@ -11,6 +12,9 @@ export default function Home() {
   const navigate = useNavigate();
   const { tabValue } = useParams();
   const largeScreen = useMediaQuery("(min-width: 30em)");
+  const { favorites } = useFavorites();
+  const todolists = useTodolists();
+  const notes = useNotes();
 
   const [maxFavoritesCardNumber, setMaxFavoritesCardNumber] = useState<
     number | undefined
@@ -71,23 +75,36 @@ export default function Home() {
         </Tabs.List>
 
         <Tabs.Panel value="all">
-          <Favorites maxCardNumber={maxFavoritesCardNumber} titleLink={true} />
-          <Text p="md">
-            <Anchor component="button" onClick={toggleShowMoreFavorites}>
-              Show {maxFavoritesCardNumber ? "all" : "less"} Favorites
-            </Anchor>
-          </Text>
+          {favorites.length > 0 && (
+            <>
+              <Favorites
+                maxCardNumber={maxFavoritesCardNumber}
+                titleLink={true}
+              />
+              <Text p="md">
+                {favorites.length > maxCardNumber && (
+                  <Anchor component="button" onClick={toggleShowMoreFavorites}>
+                    Show {maxFavoritesCardNumber ? "all" : "less"} Favorites
+                  </Anchor>
+                )}
+              </Text>
+            </>
+          )}
           <Todolists maxCardNumber={maxTodolistsCardNumber} titleLink={true} />
           <Text p="md">
-            <Anchor component="button" onClick={toggleShowMoreTodolists}>
-              Show {maxTodolistsCardNumber ? "all" : "less"} todolists
-            </Anchor>
+            {todolists.data && todolists.data.length > maxCardNumber && (
+              <Anchor component="button" onClick={toggleShowMoreTodolists}>
+                Show {maxTodolistsCardNumber ? "all" : "less"} todolists
+              </Anchor>
+            )}
           </Text>
           <Notes maxCardNumber={maxNotesCardNumber} titleLink={true} />
           <Text p="md">
-            <Anchor component="button" onClick={toggleShowMoreNotes}>
-              Show {maxNotesCardNumber ? "all" : "less"} notes
-            </Anchor>
+            {notes.data && notes.data.length > maxCardNumber && (
+              <Anchor component="button" onClick={toggleShowMoreNotes}>
+                Show {maxNotesCardNumber ? "all" : "less"} notes
+              </Anchor>
+            )}
           </Text>
         </Tabs.Panel>
         <Tabs.Panel value="favorites">

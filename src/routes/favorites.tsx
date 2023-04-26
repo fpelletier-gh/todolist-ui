@@ -50,6 +50,7 @@ export default function Favorites({
               }
               return <TodolistCard key={item.todolistId} todolist={item} />;
             })}
+          {favorites.length === 0 && <Box>No favorites</Box>}
         </SimpleGrid>
         {!titleLink && (
           <Box p="md">
