@@ -6,9 +6,11 @@ import {
   Button,
   Group,
   Anchor,
+  Divider,
 } from "@mantine/core";
 import { Link } from "react-router-dom";
 import ColorSchemeToggleButton from "../components/colorSchemeToggleButton";
+import { FeaturesCards } from "../components/featuresCards";
 import { useUser } from "../context/user";
 import { Dots } from "./dots";
 
@@ -26,6 +28,7 @@ const useStyles = createStyles((theme) => ({
 
   inner: {
     position: "relative",
+    height: "70vh",
     zIndex: 1,
   },
 
@@ -71,14 +74,18 @@ const useStyles = createStyles((theme) => ({
   title: {
     textAlign: "center",
     fontWeight: 800,
+    maxWidth: 800,
     fontSize: 40,
     letterSpacing: -1,
     color: theme.colorScheme === "dark" ? theme.white : theme.black,
+    margin: "auto",
+    paddingTop: "100px",
     marginBottom: theme.spacing.xs,
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
 
     "@media (max-width: 520px)": {
       fontSize: 28,
+      paddingTop: "30px",
       textAlign: "left",
     },
   },
@@ -146,67 +153,64 @@ export default function LandingPage() {
           )}
           <ColorSchemeToggleButton />
         </Group>
-        <Title order={3} className={classes.headerTitle} variant="gradient">
-          Todolists
-        </Title>
         <Title className={classes.title}>
-          One simple{" "}
+          Welcome to{" "}
           <Text
             component="span"
             variant="gradient"
             className={classes.highlight}
             inherit
           >
-            to do lists
+            Todolists
           </Text>{" "}
-          application for all your productivity needs
+          , the ultimate productivity tool for managing your tasks and notes!
         </Title>
 
         <Container p={0} size={600}>
           <Text size="lg" color="dimmed" className={classes.description}>
-            Designed to help you get organized, achieve your goals and never
-            forget a thing, todolists will help you stay ahead in your lists and
-            notes.
+            With our user-friendly interface and robust feature set, you can
+            easily stay organized and on top of your to-do list.
           </Text>
+          {!user && (
+            <div className={classes.controls}>
+              <Button
+                className={classes.control}
+                size="lg"
+                variant="default"
+                color="gray"
+                component={Link}
+                to="/login"
+              >
+                Login
+              </Button>
+              <Button
+                variant="gradient"
+                component={Link}
+                to="/register"
+                className={classes.control}
+                size="lg"
+              >
+                Register
+              </Button>
+            </div>
+          )}
+          {user && (
+            <div className={classes.controls}>
+              <Button
+                component={Link}
+                to="/home/all"
+                className={classes.control}
+                size="lg"
+              >
+                Welcome{" "}
+                {user?.username[0].toUpperCase() + user?.username.slice(1)}
+              </Button>
+            </div>
+          )}
         </Container>
-
-        {!user && (
-          <div className={classes.controls}>
-            <Button
-              className={classes.control}
-              size="lg"
-              variant="default"
-              color="gray"
-              component={Link}
-              to="/login"
-            >
-              Login
-            </Button>
-            <Button
-              variant="gradient"
-              component={Link}
-              to="/register"
-              className={classes.control}
-              size="lg"
-            >
-              Register
-            </Button>
-          </div>
-        )}
-        {user && (
-          <div className={classes.controls}>
-            <Button
-              component={Link}
-              to="/home/all"
-              className={classes.control}
-              size="lg"
-            >
-              Welcome{" "}
-              {user?.username[0].toUpperCase() + user?.username.slice(1)}
-            </Button>
-          </div>
-        )}
       </div>
+      <Divider mx="auto" my="sm" maw="300px" />
+      <FeaturesCards />
     </Container>
   );
 }
