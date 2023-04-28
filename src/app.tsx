@@ -25,6 +25,7 @@ import Contact from "./routes/contact";
 import Home from "./routes/home";
 import Note from "./routes/note";
 import { useLocalStorage } from "@mantine/hooks";
+import { Analytics } from "@vercel/analytics/react";
 
 export const routes = [
   {
@@ -168,6 +169,7 @@ function App() {
                   initialIsOpen={false}
                   position="bottom-right"
                 />
+                <Analytics />
               </UserContextProvider>
             </ModalsProvider>
           </NotificationsProvider>
