@@ -18,13 +18,13 @@ const featuresData = [
   {
     title: "Create todolists",
     description:
-      "Create and manage multiple to-do lists: Whether you're juggling multiple projects or simply need to keep track of your daily tasks, our application allows you to create and manage multiple to-do lists. You can easily add, edit, and delete items on your lists.",
+      "Whether you're juggling multiple projects or simply need to keep track of your daily tasks, our application allows you to create and manage multiple to-do lists. You can easily add, edit, and delete items on your lists.",
     icon: IconListDetails,
   },
   {
     title: "Take notes",
     description:
-      "Take and organize notes: Our application also lets you take and organize notes, so you can keep track of ideas, thoughts, and important information. You can create and search through your notes for specific keywords.",
+      "Our application also lets you take and organize notes, so you can keep track of ideas, thoughts, and important information. You can create and search through your notes for specific keywords.",
     icon: IconNotes,
   },
   {
@@ -36,13 +36,13 @@ const featuresData = [
   {
     title: "Theme",
     description:
-      "Light and dark theme: Our application also features a light and dark theme, allowing you to choose the theme that works best for you. Whether you prefer a bright, white background or a dark background for better visibility, our application has you covered.",
+      "Our application also features a light and dark theme, allowing you to choose the theme that works best for you. Whether you prefer a bright, white background or a dark background for better visibility, our application has you covered.",
     icon: IconBrush,
   },
   {
     title: "Access from anywhere",
     description:
-      "Access from anywhere: Our application is accessible from anywhere with an internet connection, so you can manage your tasks and notes from your computer, tablet, or smartphone.",
+      "Our application is accessible from anywhere with an internet connection, so you can manage your tasks and notes from your computer, tablet, or smartphone.",
     icon: IconUser,
   },
 ];
