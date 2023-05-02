@@ -49,6 +49,6 @@ describe("given the user enter a valid email and password", () => {
     await user.type(screen.getByLabelText(/email/i), "validUser@test.com");
     await user.type(screen.getByLabelText(/password/i), "validUserPassword123");
     await user.click(screen.getByRole("button", { name: /login/i }));
-    expect(window.location.pathname).toBe("/todolist");
+    expect(window.location.pathname).toBe("/home/all");
   });
 });
