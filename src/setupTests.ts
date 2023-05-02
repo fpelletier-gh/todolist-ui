@@ -21,6 +21,11 @@ beforeAll(() => {
       dispatchEvent: vi.fn(),
     })),
   });
+  global.ResizeObserver = vi.fn().mockImplementation(() => ({
+    observe: vi.fn(),
+    unobserve: vi.fn(),
+    disconnect: vi.fn(),
+  }));
   server.listen();
 });
 // Reset any request handlers that we may add during the tests,

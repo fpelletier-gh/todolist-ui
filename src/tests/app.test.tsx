@@ -20,20 +20,26 @@ describe("Given the user is not logged in", () => {
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
   });
+});
 
-  describe("given the user is logged in", () => {
-    it("Should navigate to the todolists page when clicking on the link on the landingPage", async () => {
-      const { user } = renderWithRouter();
-      expect(
-        await screen.findByRole("link", { name: /Todolists/i })
-      ).toBeInTheDocument();
-
-      await user.click(screen.getByRole("link", { name: "Todolists" }));
-      expect(screen.getByText(/search/i)).toBeInTheDocument();
-
-      expect(
-        within(screen.getByRole("navigation")).getByText(/new todolist/i)
-      ).toBeInTheDocument();
+describe("given the user is logged in", () => {
+  it("Should navigate to the todolists page when clicking on the link on the landingPage", async () => {
+    const { user } = renderWithRouter();
+    const welcomeButton = await screen.findByRole("link", {
+      name: /welcome/i,
     });
+    expect(welcomeButton).toBeInTheDocument();
+
+    await user.click(welcomeButton);
+    expect(
+      await screen.findByRole("button", {
+        name: /search/i,
+        hidden: true,
+      })
+    ).toBeInTheDocument();
+
+    expect(
+      within(screen.getByRole("navigation")).getByText(/Home/i)
+    ).toBeInTheDocument();
   });
 });
