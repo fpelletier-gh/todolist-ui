@@ -1,4 +1,4 @@
-import { TodolistSchema, TodoSchema, UserSchema } from "../types";
+import { NoteSchema, TodolistSchema, TodoSchema, UserSchema } from "../types";
 
 export const user: UserSchema = {
   _id: "63c751fca1f2de672f60a517",
@@ -98,6 +98,33 @@ export const todolists: TodolistSchema[] = [
         todoId: "todo_031e6038-7d34-4cbd-a773-774f12f21919",
       },
     ],
+    createdAt: "2023-01-29T18:36:07.137Z",
+    updatedAt: "2023-01-29T18:38:27.378Z",
+    __v: 0,
+  },
+];
+
+export const notes: NoteSchema[] = [
+  {
+    _id: "63d6bf43a1f2de672f614a34",
+    user: "63c751fca1f2de672f60a517",
+    title: "Todolist two",
+    content: "A second note",
+    valid: true,
+    noteId: "note_e9d77f60-df99-4f70-9059-f41183b64a10",
+    favorite: false,
+    createdAt: "2023-01-29T18:47:31.577Z",
+    updatedAt: "2023-01-31T00:57:31.960Z",
+    __v: 0,
+  },
+  {
+    _id: "63d6bc97a1f2de672f614a07",
+    user: "63c751fca1f2de672f60a517",
+    title: "Todolist one",
+    content: "A note",
+    valid: true,
+    noteId: "note_9b425417-86f6-4f4f-8c8c-ecf15d00574b",
+    favorite: true,
     createdAt: "2023-01-29T18:36:07.137Z",
     updatedAt: "2023-01-29T18:38:27.378Z",
     __v: 0,
